@@ -3,7 +3,6 @@
 
 #include "Transform.h"
 
-#include <vector>
 #include <list>
 
 
@@ -19,7 +18,7 @@ class GameObject
         Transform m_transform;
 
         GameObject *m_parent = nullptr;
-        std::vector<GameObject*> m_children; /// //////////list instead of vector please
+        std::list<GameObject*> m_children;
 
     public:
         GameObject(const Transform& source);
