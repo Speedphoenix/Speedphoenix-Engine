@@ -1,8 +1,6 @@
 #include "Animator.h"
 
 #include "Frame.h"
-#include "DiscreetAnimation.h"
-
 #include "TransformBase.h"
 #include "allegroImplem.h"
 #include "colors.h"
@@ -13,47 +11,15 @@
 
 using namespace std;
 
-///FOR TESTING PURPOSES
-void Animator::maketest()
-{
-    //this method doesn't really care about optimization
-    Transition newAnimKey;
 
-    DiscreetAnimation* newAnim;
-
-    newAnimKey = Transition(Walking, Anim::Idle, false);
-    newAnim = new DiscreetAnimation();
-    newAnim->maketest(0); //idle
-    m_animations[newAnimKey] = newAnim;
-
-    newAnimKey = Transition(Walking, Anim::Active, false);
-    newAnim = new DiscreetAnimation();
-    newAnim->maketest(1); //active
-    m_animations[newAnimKey] = newAnim;
-
-    newAnimKey = Transition(Attacking, Anim::Idle, false);
-    newAnim = new DiscreetAnimation();
-    newAnim->maketest(2); //active
-    m_animations[newAnimKey] = newAnim;
-
-    newAnimKey = Transition(Attacking, Anim::Active, false);
-    newAnim = new DiscreetAnimation();
-    newAnim->maketest(3); //active
-    m_animations[newAnimKey] = newAnim;
-
-    m_currState = Transition(Walking, Anim::Idle, false);
-}
-
-
-
-Animator::Animator(GameObject* attachTo, GeneralState startState, double startDirection)
+Animator::Animator(GameObject* attachTo, double lapse, GeneralState startState, double startDirection)
     :Behaviour(attachTo), m_currFrame(0), m_currState(startState, Anim::Idle, false), m_askedState(startState, Anim::Idle), m_askedDir(startDirection)
 {
-    m_timer = al_create_timer(defaultIdleLapse);
+    m_timer = al_create_timer(lapse);
 
     m_queue = al_create_event_queue();
 
-    //THE TIMER IS NOT STARTED YET
+    //THE TIMER IS NOT STARTED YET HERE
     al_register_event_source(m_queue, al_get_timer_event_source(m_timer));
 }
 

@@ -9,10 +9,6 @@ struct ALLEGRO_BITMAP;
 //this class could be made with a template but oh well...
 class SpritesContainer
 {
-    ///FOR TESTING PURPOSES
-    public:
-        void maketest();
-
     //statics
     protected:
         static SpritesContainer * m_instance;

@@ -1,6 +1,7 @@
 #include "GameObject.h"
 
 #include "GameContainer.h"
+#include "Behaviour.h"
 
 #include "debugNerrors.h"
 

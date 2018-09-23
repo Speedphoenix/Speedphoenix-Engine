@@ -29,10 +29,6 @@ namespace Direc {
 
 class DiscreetAnimation : public Animation
 {
-    ///FOR TESTING PURPOSES
-    public:
-        void maketest(int type = 0);
-
     protected:
         //all the frames of all animations
         std::map<Direc::Direction, std::vector<Frame*>> m_frames;

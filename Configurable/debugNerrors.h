@@ -11,10 +11,6 @@
 #include "config.h"
 #include <exception>
 
-#define TEST_SPRITESHEET RES_DIR "monsterv2.png"
-#define TEST_SHEETNAME "monsterv2"
-
-
 #include <iostream>
 
 #define E(x) {std::cerr << std::endl << #x ": " << (x) << std::endl;}

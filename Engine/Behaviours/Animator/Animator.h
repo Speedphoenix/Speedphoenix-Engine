@@ -17,10 +17,6 @@ struct ALLEGRO_TIMER;
 
 class Animator : public Behaviour
 {
-    ///FOR TESTING PURPOSES
-    public:
-        void maketest();
-
     //statics
     public:
         ///REDO THIS (and make it non static? idk)
@@ -53,7 +49,7 @@ class Animator : public Behaviour
         virtual void setNewLapse();
 
     public:
-        Animator(GameObject* attachTo, GeneralState startState = Walking, double startDirection = 0);
+        Animator(GameObject* attachTo, double lapse = 0.0, GeneralState startState = Walking, double startDirection = 0);
         virtual ~Animator();
 
 //        Animator(const Animator& other);

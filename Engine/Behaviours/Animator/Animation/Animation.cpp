@@ -12,8 +12,8 @@
 using namespace std;
 
 //only default, will need to use a real one later
-Animation::Animation()
-    :m_lapse(defaultIdleLapse)
+Animation::Animation(double _lapse)
+    :m_lapse(_lapse)
 {
     //ctor
 }

@@ -20,7 +20,7 @@ class Animation
         double m_lapse;
 
     public:
-        Animation();
+        Animation(double _lapse = 0.0);
         virtual ~Animation();
 
         ///loads every frame of the anymation & others from the stream
