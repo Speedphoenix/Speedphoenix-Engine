@@ -5,7 +5,6 @@
 
 class Drawable;
 class GameObject;
-class GlobalObject;
 class Behaviour;
 struct ALLEGRO_EVENT_QUEUE;
 
@@ -21,7 +20,7 @@ class GameContainer
     public:
         static GameContainer * instance() { return m_instance; }
 
-        static GlobalObject * getGlobalObject() { return m_instance->m_globalObject; }
+        static GameObject * getGlobalObject() { return m_instance->m_globalObject; }
 
         ///the time elapsed since the last game loop. Use this as a factor to move...
         static double deltaTime() { return m_instance->m_deltaTime; }
@@ -47,7 +46,7 @@ class GameContainer
 
     protected:
 
-        GlobalObject* m_globalObject;
+        GameObject* m_globalObject;
 
         bool m_finished;
 

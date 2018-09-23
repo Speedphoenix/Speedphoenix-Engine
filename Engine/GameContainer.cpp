@@ -6,7 +6,6 @@ GameContainer * GameContainer::m_instance = nullptr;
 #include "Drawable.h"
 #include "Events.h"
 #include "Camera.h"
-#include "GlobalObject.h"
 
 #include "allegroImplem.h"
 #include "colors.h"
@@ -26,7 +25,7 @@ GameContainer::GameContainer()
     m_instance = this;
 
     //putting this outside the initialization list because it needs the instance
-    m_globalObject = new GlobalObject();
+    m_globalObject = new GameObject();
 
     m_eventsDisplay = al_create_event_queue();
     al_register_event_source(m_eventsDisplay, al_get_display_event_source(currentDisplay));

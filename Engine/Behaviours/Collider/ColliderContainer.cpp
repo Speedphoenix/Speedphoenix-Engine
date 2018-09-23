@@ -2,7 +2,7 @@
 ColliderContainer* ColliderContainer::m_instance = nullptr;
 
 #include "GameContainer.h"
-#include "GlobalObject.h"
+#include "GameObject.h"
 #include "Collider.h"
 #include "Transform.h"
 

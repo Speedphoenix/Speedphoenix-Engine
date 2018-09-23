@@ -8,10 +8,14 @@
 
 #include <math.h>
 
-#define XOR(a, b) ( (a) ? !(b) : (b) )
 #define ABS(a) ( ((a) < 0) ? -1 * (a) : (a) )
 #define MIN(a, b) ( ((a) < (b)) ? (a) : (b) )
 #define MAX(a, b) ( ((a) > (b)) ? (a) : (b) )
+
+inline bool XOR(bool a, bool b)
+{
+    return (a ? !b : b);
+}
 
 inline double mod2PI(double orientation)
 {

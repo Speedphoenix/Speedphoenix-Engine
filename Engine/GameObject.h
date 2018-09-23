@@ -5,11 +5,13 @@
 
 #include <list>
 
+class Behaviour;
 
 class GameObject
 {
     private:
         std::list<GameObject *>::iterator m_containerIterator;
+        std::list<Behaviour *> m_behaviours;
 
     protected:
         //is set indicatively only. The removal from the GameContainer goes differently
@@ -18,7 +20,7 @@ class GameObject
         Transform m_transform;
 
         GameObject *m_parent = nullptr;
-        std::list<GameObject*> m_children;
+        std::list<GameObject *> m_children;
 
     public:
         GameObject(const Transform& source);
@@ -33,6 +35,8 @@ class GameObject
         virtual void postUpdate() { }   //!< called after update in each loop, before drawing
 
         virtual GameObject *parent() { return m_parent; }
+
+        /// Do not call this function explicitly. It is already called inside NameOfParent.addChild(pointerOfChild)
         virtual void setParent(GameObject *val);
         virtual void removeParent() { setParent(nullptr); } ///if the object cannot live without the parent kill it inside here
 
@@ -44,6 +48,9 @@ class GameObject
 
         virtual void setToRemove();
         virtual bool toRemove() { return m_toRemove; }
+
+        void attachBehaviour(Behaviour *what);
+        bool deleteBehaviour(Behaviour *what);
 };
 
 #endif // GAMEOBJECT_H

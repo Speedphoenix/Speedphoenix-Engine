@@ -1,7 +1,7 @@
 #include "Collider.h"
 #include "ColliderContainer.h"
 #include "GameContainer.h"
-#include "GlobalObject.h"
+#include "GameObject.h"
 
 #include "debugNerrors.h"
 

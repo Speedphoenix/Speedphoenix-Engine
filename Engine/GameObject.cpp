@@ -1,6 +1,7 @@
 #include "GameObject.h"
 
 #include "GameContainer.h"
+#include "Behaviour.h"
 
 #include "debugNerrors.h"
 
@@ -49,13 +50,16 @@ GameObject::GameObject(GameObject *_parent, double _x, double _y, double _w, dou
     m_containerIterator = instance->addObject(this);
 }
 
-
 GameObject::~GameObject()
 {
     //gameObjects aren't set to be removed from the gameContainer in their destructor but in the setToRemove() func
 
     //the GameObjects are removed first and destroyed.
-    //That calls the destructor for all things instide, who will tell the GameContainer to remove them
+    //This calls the destructor for all things instide, who will tell the GameContainer to remove them
+    for (auto& elem : m_behaviours)
+    {
+        delete elem;
+    }
 }
 
 
@@ -66,7 +70,7 @@ void GameObject::update()
 
 
 /**
-    Do not use this function explicitly. It is already called inside NameOfParent.addChild(pointerOfChild)
+    Do not call this function explicitly. It is already called inside NameOfParent.addChild(pointerOfChild)
 */
 void GameObject::setParent(GameObject *val)
 {
@@ -91,18 +95,16 @@ bool GameObject::removeChild(GameObject *what)
 {
     if (what)
     {
-        vector<GameObject*>::iterator it;
+        list<GameObject*>::iterator it;
         it = find(m_children.begin(), m_children.end(), what);
 
-        if (it!=m_children.end())
+        if (it != m_children.end())
         {
             m_children.erase(it);
             what->removeParent();
-
             return true;
         }
     }
-
     return false;
 }
 
@@ -124,4 +126,25 @@ void GameObject::setToRemove()
     }
 }
 
+void GameObject::attachBehaviour(Behaviour * what)
+{
+    m_behaviours.push_back(what);
+}
+
+bool GameObject::deleteBehaviour(Behaviour *what)
+{
+    if (what)
+    {
+        list<Behaviour*>::iterator it;
+        it = find(m_behaviours.begin(), m_behaviours.end(), what);
+
+        if (it != m_behaviours.end())
+        {
+            delete (*it);
+            m_behaviours.erase(it);
+            return true;
+        }
+    }
+    return false;
+}
 
