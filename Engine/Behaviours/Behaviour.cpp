@@ -3,7 +3,7 @@
 #include "GameObject.h"
 
 Behaviour::Behaviour(GameObject* attachTo)
-    :m_attachedObject(attachTo)
+    :m_attachedObject(attachTo), m_toRemove(false)
 {
     GameContainer* instance = GameContainer::instance();
 
@@ -20,6 +20,19 @@ Behaviour::~Behaviour()
     if (instance)
     {
         instance->removeBehaviour(m_containerIterator);
+    }
+}
+
+
+void Behaviour::setToRemove()
+{
+    if (m_toRemove)
+        return;
+
+    if (m_attachedObject->detachBehaviour(this))
+    {
+        m_toRemove = true;
+        m_attachedObject = nullptr;
     }
 }
 

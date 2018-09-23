@@ -13,19 +13,23 @@ class GameObject
         std::list<GameObject *>::iterator m_containerIterator;
         std::list<Behaviour *> m_behaviours;
 
-    protected:
         //is set indicatively only. The removal from the GameContainer goes differently
         bool m_toRemove;
+
+    protected:
 
         Transform m_transform;
 
         GameObject *m_parent = nullptr;
         std::list<GameObject *> m_children;
 
+        //if this is true, then killing the parent GameObject will also kill this one
+        bool m_dependsOnParent;
+
     public:
         GameObject(const Transform& source);
         GameObject(double _x = 0, double _y = 0, double _w = 0, double _h = 0, double _speed = 0);
-        GameObject(GameObject *_parent, double _x = 0, double _y = 0, double _w = 0, double _h = 0);
+        GameObject(GameObject *_parent, bool _dependsOnParent = true, double _x = 0, double _y = 0, double _w = 0, double _h = 0);
         virtual ~GameObject();
 
         //important functions
@@ -38,7 +42,10 @@ class GameObject
 
         /// Do not call this function explicitly. It is already called inside NameOfParent.addChild(pointerOfChild)
         virtual void setParent(GameObject *val);
-        virtual void removeParent() { setParent(nullptr); } ///if the object cannot live without the parent kill it inside here
+        virtual void removeParent();
+
+        bool dependsOnParent() { return m_dependsOnParent; }
+        void setDependsOnParent(bool val) { m_dependsOnParent = val; }
 
         virtual void addChild(GameObject *child);
         virtual bool removeChild(GameObject *what);
@@ -50,7 +57,7 @@ class GameObject
         virtual bool toRemove() { return m_toRemove; }
 
         void attachBehaviour(Behaviour *what);
-        bool deleteBehaviour(Behaviour *what);
+        bool detachBehaviour(Behaviour *what);
 };
 
 #endif // GAMEOBJECT_H

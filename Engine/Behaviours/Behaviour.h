@@ -17,6 +17,8 @@ class Behaviour
         //the GameObject to which this behavious is atached
         GameObject* m_attachedObject;
 
+        bool m_toRemove;
+
     protected:
 
     public:
@@ -30,6 +32,11 @@ class Behaviour
         virtual void preUpdate() { }    //this one first (and before the player's actions)
         virtual void update() = 0;      //this one in the middle, usually the main one
         virtual void postUpdate() { }   //this one last
+
+        //this will only have an effect if this behaviour is in a GameObject's list (and not a member variable)
+        //Behaviours set to be removed this way are deleted after postUpdates
+        virtual void setToRemove();
+        virtual bool toRemove() { return m_toRemove; }
 
         GameObject* attachedObject() { return m_attachedObject; }
         //make a proper setter if the need arises

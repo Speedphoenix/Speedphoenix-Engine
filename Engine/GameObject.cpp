@@ -1,7 +1,6 @@
 #include "GameObject.h"
 
 #include "GameContainer.h"
-#include "Behaviour.h"
 
 #include "debugNerrors.h"
 
@@ -10,7 +9,7 @@
 using namespace std;
 
 GameObject::GameObject(const Transform& source)
-    :m_toRemove(false), m_transform(source)
+    :m_toRemove(false), m_transform(source), m_dependsOnParent(true)
 {
     if (source.parent())
     {
@@ -27,7 +26,7 @@ GameObject::GameObject(const Transform& source)
 
 
 GameObject::GameObject(double _x, double _y, double _w, double _h, double _speed)
-    :m_toRemove(false), m_transform(_x, _y, _w, _h, false, _speed)
+    :m_toRemove(false), m_transform(_x, _y, _w, _h, false, _speed), m_dependsOnParent(true)
 {
     GameContainer* instance = GameContainer::instance();
 
@@ -37,8 +36,8 @@ GameObject::GameObject(double _x, double _y, double _w, double _h, double _speed
     m_containerIterator = instance->addObject(this);
 }
 
-GameObject::GameObject(GameObject *_parent, double _x, double _y, double _w, double _h)
-    :m_toRemove(false), m_transform(&_parent->getTransform(), _x, _y, _w, _h)
+GameObject::GameObject(GameObject *_parent, bool _dependsOnParent, double _x, double _y, double _w, double _h)
+    :m_toRemove(false), m_transform(&_parent->getTransform(), _x, _y, _w, _h), m_dependsOnParent(_dependsOnParent)
 {
     m_parent = _parent;
 
@@ -82,6 +81,13 @@ void GameObject::setParent(GameObject *val)
         m_transform.setParent(nullptr);
 }
 
+void GameObject::removeParent()
+{
+    setParent(nullptr);
+    if (m_dependsOnParent)
+        setToRemove();
+}
+
 void GameObject::addChild(GameObject *child)
 {
     if (child)
@@ -114,10 +120,14 @@ void GameObject::setToRemove()
         return;
     m_toRemove = true;
 
+    //remove this from the parent
     if (m_parent)
         m_parent->removeChild(this);
 
-    ///make remove all the childs
+    //remove all the children
+    for (auto& elem : m_children)
+        elem->removeParent();
+    m_children.clear();
 
     GameContainer* instance = GameContainer::instance();
     if (instance)
@@ -131,7 +141,7 @@ void GameObject::attachBehaviour(Behaviour * what)
     m_behaviours.push_back(what);
 }
 
-bool GameObject::deleteBehaviour(Behaviour *what)
+bool GameObject::detachBehaviour(Behaviour *what)
 {
     if (what)
     {
@@ -140,7 +150,6 @@ bool GameObject::deleteBehaviour(Behaviour *what)
 
         if (it != m_behaviours.end())
         {
-            delete (*it);
             m_behaviours.erase(it);
             return true;
         }

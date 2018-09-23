@@ -212,7 +212,7 @@ void GameContainer::autoUpdate()
     for (const auto& it : m_objects)
         it->update();
 
-    for (auto it : m_behaviours)
+    for (const auto& it : m_behaviours)
         it->update();
 
     if (Camera::currentCamera())
@@ -221,17 +221,28 @@ void GameContainer::autoUpdate()
 
 void GameContainer::postUpdate()
 {
+    list<Behaviour *> toDelete;
+
     for (const auto& it : m_objects)
         it->postUpdate();
 
-    for (auto it : m_behaviours)
+    for (const auto& it : m_behaviours)
+    {
         it->postUpdate();
+
+        //the behaviours that have to be deleted manually
+        if (it->toRemove())
+            toDelete.push_back(it);
+    }
+
+    for (const auto& it : toDelete)
+        delete it;
 }
 
 void GameContainer::autoRemove()
 {
     //ALWAYS start by removing removing the objects (and delete them)
-    //thisq will also call the destructors to the other stuff
+    //this will also call the destructors to the other stuff
     //and thus add them to the other remove lists
     for (const auto& it : m_remObjects)
     {

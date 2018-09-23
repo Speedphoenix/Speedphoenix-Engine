@@ -65,7 +65,7 @@ class Animator : public Behaviour
 
         /// starts the animation
         virtual void launch();   //can be used to un-pause too
-        ///stops thee animation
+        ///stops the animation
         virtual void stop();    //can be used to pause too
         ///will update stuff like the frame counter if need be
         virtual void update();
