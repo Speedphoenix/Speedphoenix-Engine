@@ -34,9 +34,10 @@ const double minCameraZoom = 0.5;
                                 IMAGES
 ********************************************************************/
 
+#ifndef RES_DIR
 //might want to put this one as a game-specific config
-#define RES_DIR "res/"
-
+# define RES_DIR "res/"
+#endif // RES_DIR
 
 #endif // CONFIG_H_INCLUDED
 

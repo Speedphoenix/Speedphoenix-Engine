@@ -23,6 +23,7 @@ class SpritesContainer
         SpritesContainer();
         virtual ~SpritesContainer();
 
+        void addSprite(std::string key, ALLEGRO_BITMAP *val) { m_sprites[key] = val; }
         ALLEGRO_BITMAP* at(std::string theKey) { return m_sprites.at(theKey); }
 };
 
