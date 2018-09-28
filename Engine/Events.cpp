@@ -1,7 +1,7 @@
 #include "Events.h"
 
 //allegro 5's events. contains ALLEGRO_EVENT etc
-#include "events.h"
+#include "allegro5/events.h"
 
 KeyboardEvent::KeyboardEvent(const ALLEGRO_EVENT& what)
     :type(what.type), source(what.keyboard.source), timestamp(what.any.timestamp), display(what.keyboard.display),
