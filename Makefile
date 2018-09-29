@@ -24,15 +24,10 @@ DEBUGFLAGS		=	-g
 
 DEFAULTFLAGS	=	-std=c++11 -fexceptions -Wall
 
-SRDIRS			=	Configurable							\
-					Engine									\
-					Engine/Non_Classes						\
-					Engine/Transform						\
-					Engine/Behaviours						\
-					Engine/Behaviours/Collider				\
-					Engine/Behaviours/Animator				\
-					Engine/Behaviours/Animator/Animation	\
-					Engine/Behaviours/Animator/Composing
+# the file Makefile.engdirs contains the ENGINEDIRS variable
+include Makefile.engdirs
+
+SRDIRS			+=	$(ENGINEDIRS)
 
 INCLUDEPFLAGS	:=	$(addprefix -I, $(SRDIRS))
 
@@ -52,7 +47,11 @@ RM				=	/bin/rm -f
 
 MKDIR			=	/bin/mkdir -p
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re debug release
+
+$(OBJDIR)/%.o: %.cpp
+	$(MKDIR) $(dir $@)
+	$(CXX) -c $< -o $@ $(CXXFLAGS) $(LDLIBS)
 
 $(NAME): $(OBJ)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJ)
@@ -60,15 +59,11 @@ $(NAME): $(OBJ)
 
 all: $(NAME)
 
-debug: CXXFLAGS += $(DEBUGFLAGS)
+debug: $(CXXFLAGS) += $(DEBUGFLAGS)
 debug: $(NAME)
 
-release: CXXFLAGS += $(RELEASEFLAGS)
+release: $(CXXFLAGS) += $(RELEASEFLAGS)
 release: $(NAME)
-
-$(OBJDIR)/%.o: %.cpp
-	$(MKDIR) $(dir $@)
-	$(CXX) -c $< -o $@ $(CXXFLAGS) $(LDLIBS)
 
 clean:
 	$(RM) -r $(OBJDIR)

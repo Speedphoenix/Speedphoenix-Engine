@@ -1,0 +1,13 @@
+# This file contains the variable for the Speedphoenix engine's directories.
+# Include this file in your Makefile if you need the list of directories
+# containing for examplel header files
+
+ENGINEDIRS		=	Configurable							\
+					Engine									\
+					Engine/Non_Classes						\
+					Engine/Transform						\
+					Engine/Behaviours						\
+					Engine/Behaviours/Collider				\
+					Engine/Behaviours/Animator				\
+					Engine/Behaviours/Animator/Animation	\
+					Engine/Behaviours/Animator/Composing
