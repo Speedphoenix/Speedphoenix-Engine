@@ -1,4 +1,4 @@
-NAME			=	SpxEngine.a
+NAME			=	libspxengine.a
 
 OBJDIR			=	obj
 
@@ -10,34 +10,36 @@ ARFLAGS			=	rc
 
 INDEXER			=	ranlib
 
-RELEASEFLAGS	=	-O3 -Wnon-virtual-dtor -Wshadow			\
-					-Winit-self	-Wredundant-decls 			\
-					-Wcast-align -Wundef -Wfloat-equal		\
-					-Winline -Wunreachable-code				\
-					-Wmissing-declarations					\
-					-Wmissing-include-dirs -Weffc++			\
-					-Wswitch-enum -Wswitch-default			\
-					-Wzero-as-null-pointer-constant			\
-					-Wmain -pedantic -Wextra
-
 DEBUGFLAGS		=	-g
 
-DEFAULTFLAGS	=	-std=c++11 -fexceptions -Wall
+RELEASEFLAGS	=	-O3
 
-# the file Makefile.engdirs contains the ENGINEDIRS variable
-include Makefile.engdirs
+WARNINGS		=	-Wall -Wshadow -Wswitch-enum -Wundef	\
+					-Wredundant-decls -Wcast-align -Winline	\
+					-Wzero-as-null-pointer-constant			\
+					-Wnon-virtual-dtor -Wpedantic	 		\
+					-Wmissing-include-dirs -Winvalid-pch
+
+EXTRAWFLAGS		=	-Wextra -Wfloat-equal -Weffc++			\
+					-Wunreachable-code -Wswitch-default		\
+					-Wmissing-declarations
+
+DEFAULTFLAGS	=	-std=c++11 -fexceptions $(WARNINGS)
+
+# the file Makefile.eng contains:
+# ENGINEDIRS variable
+# ENGINEDEPEND variable
+include Makefile.eng
 
 SRDIRS			+=	$(ENGINEDIRS)
 
 INCLUDEPFLAGS	:=	$(addprefix -I, $(SRDIRS))
 
-CXXFLAGS		:=	$(DEFAULTFLAGS) $(INCLUDEPFLAGS)
+CXXFLAGS		=	$(DEFAULTFLAGS) $(INCLUDEPFLAGS)
 
-LDLIBS			=	-lallegro								\
-					-lallegro_image							\
-					-lallegro_font							\
-					-lallegro_primitive						\
-					-lallegro_color
+LDLIBS			=	$(ENGINEDEPEND)
+
+LDFLAGS			=	
 
 SRC				:=	$(wildcard $(addsuffix /*.cpp, $(SRDIRS)))
 
@@ -47,11 +49,11 @@ RM				=	/bin/rm -f
 
 MKDIR			=	/bin/mkdir -p
 
-.PHONY: all clean fclean re debug release
+.PHONY: all clean fclean re debug release extrawarnings
 
 $(OBJDIR)/%.o: %.cpp
 	$(MKDIR) $(dir $@)
-	$(CXX) -c $< -o $@ $(CXXFLAGS) $(LDLIBS)
+	$(CXX) -c $< -o $@ $(CXXFLAGS)
 
 $(NAME): $(OBJ)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJ)
@@ -59,10 +61,13 @@ $(NAME): $(OBJ)
 
 all: $(NAME)
 
-debug: $(CXXFLAGS) += $(DEBUGFLAGS)
+debug: CXXFLAGS += $(DEBUGFLAGS)
 debug: $(NAME)
 
-release: $(CXXFLAGS) += $(RELEASEFLAGS)
+extrawarnings: CXX += $(EXTRAWFLAGS)
+extrawarnings: debug
+
+release: CXXFLAGS += $(RELEASEFLAGS)
 release: $(NAME)
 
 clean:

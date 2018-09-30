@@ -1,8 +1,8 @@
+# This file contains the variables for the dependencies of Speedphoenix engine
 # This file contains the variable for the Speedphoenix engine's directories.
-# Include this file in your Makefile if you need the list of directories
-# containing for examplel header files
+# Include this file in your Makefile if you need either of these
 
-ENGINEDIRS		=	Configurable							\
+ENGINEDIRS		:=	Configurable							\
 					Engine									\
 					Engine/Non_Classes						\
 					Engine/Transform						\
@@ -11,3 +11,9 @@ ENGINEDIRS		=	Configurable							\
 					Engine/Behaviours/Animator				\
 					Engine/Behaviours/Animator/Animation	\
 					Engine/Behaviours/Animator/Composing
+
+ENGINEDEPEND	:=	-lallegro								\
+					-lallegro_font							\
+					-lallegro_primitives					\
+					-lallegro_color							\
+					-lallegro_image
