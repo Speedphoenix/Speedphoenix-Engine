@@ -3,7 +3,7 @@
 
 
 /********************************************************************
-                            BASIC OPERATORS
+							BASIC OPERATORS
 ********************************************************************/
 
 #include <math.h>
@@ -14,17 +14,17 @@
 
 inline bool XOR(bool a, bool b)
 {
-    return (a ? !b : b);
+	return (a ? !b : b);
 }
 
 inline double mod2PI(double orientation)
 {
-    if (orientation > (2 * M_PI))
-        return orientation - (2 * M_PI) * ((int)(orientation * M_PI_2));
-    else if (orientation < 0)
-        return orientation - (2 * M_PI) * (-1 + (int)(orientation * M_PI_2));
-    else
-        return orientation;
+	if (orientation > (2 * M_PI))
+		return orientation - (2 * M_PI) * ((int)(orientation * M_PI_2));
+	else if (orientation < 0)
+		return orientation - (2 * M_PI) * (-1 + (int)(orientation * M_PI_2));
+	else
+		return orientation;
 }
 
 

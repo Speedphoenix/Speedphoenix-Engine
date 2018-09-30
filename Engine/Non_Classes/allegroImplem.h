@@ -2,8 +2,8 @@
 #define ALLEGROIMPLEM_H_INCLUDED
 
 /**
-    This file contains
-    most Allegro library related operations
+	This file contains
+	most Allegro library related operations
  */
 
 

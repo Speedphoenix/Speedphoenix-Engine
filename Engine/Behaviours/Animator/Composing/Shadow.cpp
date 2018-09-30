@@ -3,13 +3,13 @@
 //using namespace std;
 //
 //Shadow::Shadow()
-//    :m_Original(nullptr), m_canEvolve(false)
+//	  :m_Original(nullptr), m_canEvolve(false)
 //{
-//    //ctor
+//	  //ctor
 //}
 //
 //Shadow::~Shadow()
 //{
-//    //dtor
+//	  //dtor
 //}
 

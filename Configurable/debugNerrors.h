@@ -2,10 +2,10 @@
 #define DEBUGNERRORS_H_INCLUDED
 
 /**
-    This file contains
-    Macros and others about debuging and errors...
+	This file contains
+	Macros and others about debuging and errors...
 
-    Also contains constants n' stuff for testing purposes
+	Also contains constants n' stuff for testing purposes
 */
 
 #include "config.h"

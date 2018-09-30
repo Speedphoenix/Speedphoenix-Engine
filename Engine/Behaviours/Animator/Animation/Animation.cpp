@@ -13,24 +13,24 @@ using namespace std;
 
 //only default, will need to use a real one later
 Animation::Animation(double _lapse)
-    :m_lapse(_lapse)
+	:m_lapse(_lapse)
 {
-    //ctor
+	//ctor
 }
 
 Animation::~Animation()
 {
-    //dtor
+	//dtor
 }
 
 std::istream& Animation::getFromStream(std::istream& theStream)
 {
-    return theStream;
+	return theStream;
 }
 
 //we can later make it so that instead of separate bitmaps, we take part of one bigger bitmap, for performance
 void Animation::draw(double destx, double desty, unsigned frameNumber)
 {
-    this->getFrame(frameNumber)->draw(destx, desty);
+	this->getFrame(frameNumber)->draw(destx, desty);
 }
 

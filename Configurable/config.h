@@ -2,20 +2,20 @@
 #define CONFIG_H_INCLUDED
 
 /**
-    This file contains
-    constants and others stuff to configure the game
+	This file contains
+	constants and others stuff to configure the game
 */
 
 
 /********************************************************************
-                        CONFIGURABLE CONSTANTS
+						CONFIGURABLE CONSTANTS
 ********************************************************************/
 
 const double negligibleDistance = 0.25; //in pixels
 
 
 /********************************************************************
-                                ALLEG
+								ALLEG
 ********************************************************************/
 
 const int defaultDispWidth = 1200;
@@ -23,7 +23,7 @@ const int defaultDispHeight = 800;
 
 
 /********************************************************************
-                                CAMERA
+								CAMERA
 ********************************************************************/
 
 const double maxCameraZoom = 2.0; //for the moment
@@ -31,7 +31,7 @@ const double minCameraZoom = 0.5;
 
 
 /********************************************************************
-                                IMAGES
+								IMAGES
 ********************************************************************/
 
 #ifndef RES_DIR
