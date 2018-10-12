@@ -36,3 +36,6 @@ obj/*
 *.cbp
 *.layout
 *.depend
+
+# vim swap files
+*.swp
