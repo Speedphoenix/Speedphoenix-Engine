@@ -71,7 +71,7 @@ class TransformBase
 		virtual ~TransformBase();
 
 		///sets relX and relY to be the coordinates relative to baseOrigin's position
-		virtual void getRelativeCoords(const TransformBase& baseOrigin, double& relX, double& relY);
+		virtual void getRelativeCoords(const TransformBase& baseOrigin, double& relX, double& relY) const;
 
 		///if the transform is moving, makes it move depending on dx and dy
 		virtual void translate(double factor);
@@ -79,10 +79,10 @@ class TransformBase
 		virtual void headTowards(const TransformBase& where, double speedLimit);
 		virtual void headTowards(double x, double y, double speedLimit);
 
-		virtual bool isInside(const Transform& container);
-		virtual bool isInside(const TransformCircle& container);
-		virtual bool touches(const Transform& other);
-		virtual bool touches(const TransformCircle& other);
+		virtual bool isInside(const Transform& container) const;
+		virtual bool isInside(const TransformCircle& container) const;
+		virtual bool touches(const Transform& other) const;
+		virtual bool touches(const TransformCircle& other) const;
 
 		virtual bool hasSamePos(const TransformBase& other);
 

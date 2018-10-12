@@ -17,7 +17,7 @@ class Frame
 	public:
 		Frame(ALLEGRO_BITMAP* _img, int _takenX, int _takenY, int _width, int _height);
 		Frame(ALLEGRO_BITMAP* _img);
-		~Frame();
+		virtual ~Frame();
 
 		virtual void draw(double destx, double desty);
 

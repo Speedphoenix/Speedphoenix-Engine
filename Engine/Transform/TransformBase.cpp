@@ -55,7 +55,7 @@ bool TransformBase::hasSamePos(const TransformBase& other)
 }
 
 
-void TransformBase::getRelativeCoords(const TransformBase& baseOrigin, double& relX, double& relY)
+void TransformBase::getRelativeCoords(const TransformBase& baseOrigin, double& relX, double& relY) const
 {
 	relX = this->absX() - baseOrigin.absX();
 	relY = this->absY() - baseOrigin.absY();
@@ -336,24 +336,24 @@ bool TransformBase::touches(const Transform& first, const TransformCircle& secon
 }
 
 
-bool TransformBase::isInside(const Transform& container)
+bool TransformBase::isInside(const Transform& container) const
 {
 	return (absX() >= container.absX() && absX() <= container.endAbsX() &&
 			absY() >= container.absY() && absY() <= container.endAbsY() );
 }
 
-bool TransformBase::isInside(const TransformCircle& container)
+bool TransformBase::isInside(const TransformCircle& container) const
 {
 	return (getSQDist(container) <= SQ(container.radius()));
 }
 
-bool TransformBase::touches(const Transform& other)
+bool TransformBase::touches(const Transform& other) const
 {
 	//since it's just a point
 	return isInside(other);
 }
 
-bool TransformBase::touches(const TransformCircle& other)
+bool TransformBase::touches(const TransformCircle& other) const
 {
 	//since it's just a point
 	return isInside(other);
