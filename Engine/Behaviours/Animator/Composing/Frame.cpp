@@ -47,7 +47,7 @@ void Frame::draw(double destx, double desty, double orientation)
 		al_draw_bitmap(m_sprite, destx, desty, 0);
 	else
 		al_draw_rotated_bitmap(m_sprite, m_width / 2, m_height / 2,
-			destx + m_width / 2, desty + m_height / 2,rorientation, 0);
+			destx + m_width / 2, desty + m_height / 2, orientation, 0);
 }
 
 
