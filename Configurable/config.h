@@ -6,6 +6,9 @@
 	constants and others stuff to configure the game
 */
 
+//from allegro5
+#include "allegro5/keycodes.h"
+#include "allegro5/events.h"
 
 /********************************************************************
 						CONFIGURABLE CONSTANTS

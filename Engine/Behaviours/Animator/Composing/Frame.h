@@ -19,7 +19,7 @@ class Frame
 		Frame(ALLEGRO_BITMAP* _img);
 		virtual ~Frame();
 
-		virtual void draw(double destx, double desty);
+		virtual void draw(double destx, double desty, double orientation = 0.0);
 
 		bool operator==(const Frame& cmp) const;
 		bool operator==(ALLEGRO_BITMAP* cmp) const;

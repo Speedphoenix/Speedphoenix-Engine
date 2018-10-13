@@ -8,7 +8,6 @@
 
 #include "basic_ops.h"
 
-
 using namespace std;
 
 
@@ -25,7 +24,10 @@ Animator::Animator(GameObject* attachTo, double lapse, GeneralState startState, 
 
 Animator::~Animator()
 {
-	//dtor
+	al_destroy_timer(m_timer);
+	al_destroy_event_queue(m_queue);
+	for (const auto& elem : m_animations)
+		delete elem.second;
 }
 
 //Animator::Animator(const Animator& other)

@@ -38,7 +38,6 @@ class Animator : public Behaviour
 
 		State m_askedState;
 
-		//should replace all of these by one big map<Transition, Animation *>
 		std::map<Transition, Animation*> m_animations;
 
 		//the asked direction (because the actual shown dir can be different based on availability

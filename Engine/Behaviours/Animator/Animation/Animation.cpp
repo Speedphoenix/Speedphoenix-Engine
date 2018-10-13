@@ -2,8 +2,6 @@
 
 #include "SpritesContainer.h"
 
-#include "config.h"
-#include "colors.h"
 #include "allegroImplem.h"
 #include "debugNerrors.h"
 

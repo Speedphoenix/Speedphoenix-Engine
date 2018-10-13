@@ -45,7 +45,7 @@ class Animation
 		//make this return the lapse for the current direction if you separate them
 		///the lapse of time to wait between every frame
 		virtual double lapse() const { return m_lapse; }
-		virtual void setLapse(double val) { if (val>0) m_lapse = val;}
+		virtual void setLapse(double val) { if (val>0) m_lapse = val; }
 };
 
 inline std::istream& operator>>(std::istream& theStream, Animation& recept)

@@ -1,5 +1,6 @@
 #include "DiscreetAnimation.h"
 
+#include "Frame.h"
 #include "debugNerrors.h"
 
 #include "basic_ops.h"
@@ -16,7 +17,11 @@ DiscreetAnimation::DiscreetAnimation()
 
 DiscreetAnimation::~DiscreetAnimation()
 {
-	//dtor
+	for (const auto& dir : m_frames)
+	{
+		for (const auto& elem : dir.second)
+			delete elem;
+	}
 }
 
 unsigned DiscreetAnimation::nbFrames()

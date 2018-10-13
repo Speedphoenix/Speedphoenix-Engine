@@ -48,13 +48,11 @@ GameContainer::~GameContainer()
 	al_destroy_event_queue(m_eventsDisplay);
 	al_destroy_event_queue(m_eventsKeyboard);
 	al_destroy_event_queue(m_eventsMouse);
+	al_destroy_event_queue(m_eventsTouch);
 
 	for (auto& elem : m_objects)
-	{
 		elem->setToRemove();
-	}
 	autoRemove();
-
 	m_instance = nullptr;
 }
 

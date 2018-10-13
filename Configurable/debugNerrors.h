@@ -13,8 +13,11 @@
 
 #include <iostream>
 
-#define E(x) {std::cerr << std::endl << #x ": " << (x) << std::endl;}
-#define ES(x) {std::cerr << std::endl << (x) << std::endl;}
+#define E(x) { EINF std::cerr << ": " << #x ": " << (x) << std::endl; }
+
+#define EINF { std::cerr << __FILE__ ": " << "l" << __LINE__ << std::endl; }
+
+#define ES(x) { std::cerr << std::endl << (x) << std::endl; }
 
 
 #endif //DEBUGNERRORS_H_INCLUDED
