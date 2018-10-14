@@ -11,8 +11,6 @@ class Frame;
 class AimedAnimation : public Animation
 {
 	protected:
-		double m_currDirection;
-
 		std::vector<Frame*> m_frames;
 
 		virtual void clearFrames();
@@ -37,10 +35,6 @@ class AimedAnimation : public Animation
 
 		virtual void draw(double destx, double desty, unsigned frameNumber);
 
-		virtual double currDirection() const { return m_currDirection; }
-
-		/// set the direction. Will chose the closest available if there are no
-		// frames for val direction
 		virtual void setDirection(double orientation);
 };
 

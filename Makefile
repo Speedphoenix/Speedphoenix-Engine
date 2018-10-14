@@ -12,7 +12,7 @@ INDEXER			=	ranlib
 
 DEBUGFLAGS		=	-g
 
-RELEASEFLAGS	=	-O3
+RELEASEFLAGS	=	-O3 -D _NO_TEST_
 
 WARNINGS		=	-Wall -Wshadow -Wswitch-enum -Wundef	\
 					-Wredundant-decls -Wcast-align -Winline	\

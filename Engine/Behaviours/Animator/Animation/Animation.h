@@ -19,6 +19,8 @@ class Animation
 		//might wanna make this unique to each direction...
 		double m_lapse;
 
+		double m_aimedDir;
+
 	public:
 		Animation(double _lapse = 0.0);
 		virtual ~Animation();
@@ -36,7 +38,8 @@ class Animation
 		virtual Frame* getFrame(unsigned frameNumber) = 0;
 
 		///set the direction. Will chose the closest available if there are no frames for val direction
-		virtual void setDirection(double orientation) { }
+		virtual void setDirection(double orientation);
+		virtual double aimedDirection() const { return m_aimedDir; }
 
 //		  Shadow* shadow() { return m_shadow; }
 //		  void setShadow(Shadow* val) { m_shadow = val; }

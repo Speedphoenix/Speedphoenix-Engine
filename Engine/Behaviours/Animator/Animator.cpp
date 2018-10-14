@@ -66,15 +66,12 @@ void Animator::makeActive(bool playOnce)
 
 		State inter(getBestState(m_animations, Anim::Active, m_askedState).genState, Anim::Active);
 
-		m_currState.setState(inter, playOnce);
+		m_currState.setState(inter);
 		m_currFrame = 0;
 
 		setNewLapse();
 	}
-	else
-	{
-		m_currState.playOnce = playOnce;
-	}
+	m_currState.playOnce = playOnce;
 }
 
 void Animator::makeIdle()
@@ -94,6 +91,7 @@ void Animator::makeIdle()
 		m_currState.to = inter;
 
 		setNewLapse();
+		m_animations.at(m_currState)->setDirection(m_askedDir);
 	}
 }
 
@@ -141,10 +139,11 @@ void Animator::setState(State what, const TransformBase& direction)
 
 void Animator::setDirection(double direction)
 {
-	if (direction >= 2*M_PI || direction < 0)
-		m_askedDir = 0;
-	else
-		m_askedDir = direction;
+	direction = mod2PI(direction);
+	if (sameAngle(direction, m_askedDir))
+		return ;
+	
+	m_askedDir = direction;
 
 	m_animations.at(m_currState)->setDirection(m_askedDir);
 }
@@ -174,7 +173,6 @@ void Animator::update()
 {
 	ALLEGRO_EVENT retEvent;
 
-
 	while (al_get_next_event(m_queue, &retEvent))
 	{
 		m_currFrame++;
@@ -203,12 +201,18 @@ void Animator::update()
 						State inter = m_askedState;
 						inter.animType = Anim::Idle;
 
-						setState(inter, false);
+						setState(inter);
 					}
 				}
 			}
 		}
 	}
+}
+
+void Animator::postUpdate()
+{
+	if (m_animations.at(m_currState)->aimedDirection() != m_askedDir)
+		m_animations.at(m_currState)->setDirection(m_askedDir);
 }
 
 ALLEGRO_BITMAP* Animator::getImg()

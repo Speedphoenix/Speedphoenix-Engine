@@ -64,6 +64,9 @@ class Animator : public Behaviour
 		virtual void stop();	//can be used to pause too
 		///will update stuff like the frame counter if need be
 		virtual void update();
+		///will make sure that the animation looks in the right direction here
+		//this is somewhat guaranteed to be the last thing called before draw()
+		virtual void postUpdate();
 
 		///returns the current image. Use the draw function instead
 		virtual ALLEGRO_BITMAP* getImg();

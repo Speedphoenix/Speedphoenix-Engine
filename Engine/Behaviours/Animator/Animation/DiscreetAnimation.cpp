@@ -47,6 +47,7 @@ Frame* DiscreetAnimation::getFrame(unsigned frameNumber)
 void DiscreetAnimation::setDirection(Direc::Direction val)
 {
 	m_currDirection = getBestDirection(val);
+	/// TODO set the aimed direction here
 }
 
 void DiscreetAnimation::setDirection(double orientation)
@@ -63,6 +64,7 @@ void DiscreetAnimation::setDirection(double orientation)
 		lookAt = 0;
 
 	setDirection((Direc::Direction) lookAt); // cast into the enum
+	m_aimedDir = orientation;
 }
 
 

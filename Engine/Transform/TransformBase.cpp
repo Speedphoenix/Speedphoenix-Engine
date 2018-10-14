@@ -168,7 +168,7 @@ void TransformBase::calcOrientation()
 {
 	m_speed = getDist(m_dx, m_dy, 0, 0);
 
-	m_orientation = acos(m_dx/m_speed);
+	m_orientation = atan2(m_dy, m_dx);
 }
 
 

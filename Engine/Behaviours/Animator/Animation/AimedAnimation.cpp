@@ -4,14 +4,14 @@
 #include "basic_ops.h"
 
 AimedAnimation::AimedAnimation()
-	:Animation(), m_currDirection(0.0)
+	:Animation()
 {
 	//ctor
 }
 
 AimedAnimation::AimedAnimation(ALLEGRO_BITMAP* sheet,
 								int x, int y, int w, int h, int nb)
-	:Animation(), m_currDirection(0.0)
+	:Animation()
 {
 	createFromSheet(sheet, y, x, w, h, nb);
 }
@@ -60,12 +60,11 @@ Frame* AimedAnimation::getFrame(unsigned frameNumber)
 
 void AimedAnimation::draw(double destx, double desty, unsigned frameNumber)
 {
-	this->getFrame(frameNumber)->draw(destx, desty, m_currDirection);
+	this->getFrame(frameNumber)->draw(destx, desty, m_aimedDir);
 }
 
-///set the direction. Will chose the closest available if there are no frames for val direction
 void AimedAnimation::setDirection(double orientation)
 {
-	m_currDirection = mod2PI(orientation);
+	m_aimedDir = mod2PI(orientation);
 }
 
