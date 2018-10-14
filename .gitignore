@@ -6,7 +6,6 @@
 *.lo
 *.o
 *.obj
-obj/*
 
 # Precompiled Headers
 *.gch
@@ -32,10 +31,16 @@ obj/*
 *.out
 *.app
 
-# Code::Blocks files
-*.cbp
+# code::blocks generated
+bin/
+obj/
 *.layout
+
 *.depend
+*.cbp
+
+# from clion?
+*.cscope_file_list
 
 # vim swap files
 *.swp
