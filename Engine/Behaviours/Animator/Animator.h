@@ -17,6 +17,8 @@ struct ALLEGRO_TIMER;
 
 class Animator : public Behaviour
 {
+	friend class CreateAnimator;
+
 	//statics
 	public:
 		///REDO THIS (and make it non static? idk)
