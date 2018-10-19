@@ -8,7 +8,7 @@
 class GameObject;
 
 Collider::Collider(GameObject* attachTo, const Transform& _box)
-	:Behaviour(attachTo), m_box(_box, &attachTo->getTransform()), previousX(-1), previousY(-1), m_moved(true)
+	:Behaviour(attachTo), m_box(_box, &attachTo->transform()), previousX(-1), previousY(-1), m_moved(true)
 {
 	if (!ColliderContainer::instance())
 	{

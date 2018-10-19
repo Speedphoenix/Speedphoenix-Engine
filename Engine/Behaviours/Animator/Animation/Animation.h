@@ -2,6 +2,7 @@
 #define ANIMATION_H
 
 #include <istream>
+#include "config.h"
 
 class Shadow;
 class Frame;
@@ -22,7 +23,7 @@ class Animation
 		double m_aimedDir;
 
 	public:
-		Animation(double _lapse = 0.0);
+		Animation(double _lapse = minLapse);
 		virtual ~Animation();
 
 		///loads every frame of the anymation & others from the stream

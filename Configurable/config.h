@@ -16,6 +16,8 @@
 
 const double negligibleDistance = 0.25; //in pixels
 
+const double minLapse = 0.001;
+
 
 /********************************************************************
 								ALLEG

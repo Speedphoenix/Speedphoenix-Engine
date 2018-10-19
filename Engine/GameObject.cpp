@@ -38,7 +38,7 @@ GameObject::GameObject(double _x, double _y, double _w, double _h, double _speed
 }
 
 GameObject::GameObject(GameObject *_parent, bool _dependsOnParent, double _x, double _y, double _w, double _h)
-	:m_toRemove(false), m_transform(&_parent->getTransform(), _x, _y, _w, _h), m_dependsOnParent(_dependsOnParent)
+	:m_toRemove(false), m_transform(&_parent->transform(), _x, _y, _w, _h), m_dependsOnParent(_dependsOnParent)
 {
 	m_parent = _parent;
 
@@ -77,7 +77,7 @@ void GameObject::setParent(GameObject *val)
 	m_parent = val;
 
 	if (val)
-		m_transform.setParent(&val->getTransform());
+		m_transform.setParent(&val->transform());
 	else
 		m_transform.setParent(nullptr);
 }

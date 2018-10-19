@@ -1,18 +1,20 @@
 #include "Animator.h"
 
-#include "Frame.h"
 #include "TransformBase.h"
+#include "GameObject.h"
+#include "Camera.h"
+#include "Frame.h"
+
 #include "allegroImplem.h"
-#include "colors.h"
 #include "debugNerrors.h"
+#include "colors.h"
 
 #include "basic_ops.h"
 
 using namespace std;
 
-
 Animator::Animator(GameObject* attachTo, double lapse, GeneralState startState, double startDirection)
-	:Behaviour(attachTo), m_currFrame(0), m_currState(startState, Anim::Idle, false), m_askedState(startState, Anim::Idle), m_askedDir(startDirection)
+	:Behaviour(attachTo), Drawable(), m_currFrame(0), m_currState(startState, Anim::Idle, false), m_askedState(startState, Anim::Idle), m_askedDir(startDirection)
 {
 	m_timer = al_create_timer(lapse);
 
@@ -47,7 +49,6 @@ Animator::~Animator()
 void Animator::setNewLapse()
 {
 	double newLapse = m_animations.at(m_currState)->lapse();
-
 	//set the right lapse for the new animation
 	//this comparison of floating point is safe since it was only set
 	//from a definite value, no operations were made on it.
@@ -121,7 +122,6 @@ void Animator::setState(State what, bool shouldChangeDirec)
 
 	if (shouldChangeDirec)
 		m_animations.at(m_currState)->setDirection(m_askedDir);
-
 	setNewLapse();
 }
 
@@ -153,14 +153,22 @@ void Animator::setDirection(const TransformBase& direction)
 	setDirection(direction.orientation());
 }
 
-
-void Animator::draw(double destx, double desty)
+void Animator::draw()
 {
-	m_animations.at(m_currState)->draw(destx, desty, m_currFrame);
+	const TransformBase& where = this->attachedObject()->transform();
+	const Transform& camera = Camera::getCurrentView();
+
+	if (where.touches(camera))
+	{
+		double relx = 0, rely = 0;
+		where.getRelativeCoords(camera, relx, rely);
+		m_animations.at(m_currState)->draw(relx, rely, m_currFrame);
+	}
 }
 
 void Animator::launch()
 {
+	setNewLapse();
 	al_start_timer(m_timer);
 }
 

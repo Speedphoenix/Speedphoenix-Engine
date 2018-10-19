@@ -2,6 +2,7 @@
 #define ANIMATOR_H
 
 #include <Behaviour.h>
+#include "Drawable.h"
 
 #include "Animation.h"
 #include "State.h"
@@ -15,7 +16,7 @@ struct ALLEGRO_BITMAP;
 struct ALLEGRO_EVENT_QUEUE;
 struct ALLEGRO_TIMER;
 
-class Animator : public Behaviour
+class Animator : public Behaviour, Drawable
 {
 	friend class CreateAnimator;
 
@@ -50,7 +51,7 @@ class Animator : public Behaviour
 		virtual void setNewLapse();
 
 	public:
-		Animator(GameObject* attachTo, double lapse = 0.0, GeneralState startState = Walking, double startDirection = 0);
+		Animator(GameObject* attachTo, double lapse = minLapse, GeneralState startState = Walking, double startDirection = 0);
 		virtual ~Animator();
 
 //		  Animator(const Animator& other);
@@ -58,7 +59,7 @@ class Animator : public Behaviour
 
 
 		/// draws at destx, desty on the current target bitmap
-		virtual void draw(double destx, double desty);
+		virtual void draw();
 
 		/// starts the animation
 		virtual void launch();	 //can be used to un-pause too

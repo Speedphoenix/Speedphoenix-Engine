@@ -28,15 +28,3 @@ Drawable::~Drawable()
 	}
 }
 
-void Drawable::draw(Animator& what, const TransformBase& where)
-{
-	const Transform& camera = Camera::getCurrentView();
-
-	if (where.touches(camera))
-	{
-		double relx = 0, rely = 0;
-		where.getRelativeCoords(camera, relx, rely);
-		what.draw(relx, rely);
-	}
-}
-

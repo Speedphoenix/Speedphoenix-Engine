@@ -34,6 +34,8 @@ class TransformBase
 		static bool touches(const Transform& first, const TransformCircle& second);			//one rect and one circle
 		static bool touches(const TransformCircle& first, const Transform& second) { return touches(second, first); } //to call it both ways
 
+		//swapping two Transforms
+		static void swapPos(TransformBase& first, TransformBase& second);
 
 	//non-statics
 	protected:
@@ -84,6 +86,7 @@ class TransformBase
 		virtual bool touches(const Transform& other) const;
 		virtual bool touches(const TransformCircle& other) const;
 
+		virtual bool hasSamePos(double _x, double _y);
 		virtual bool hasSamePos(const TransformBase& other);
 
 		//the squared distance between this and the params

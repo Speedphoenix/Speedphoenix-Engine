@@ -50,7 +50,7 @@ class GameObject
 		virtual void addChild(GameObject *child);
 		virtual bool removeChild(GameObject *what);
 
-		virtual Transform& getTransform() { return m_transform; }
+		virtual Transform& transform() { return m_transform; }
 		virtual void setTransform(const Transform& val) { m_transform = val; }
 
 		virtual void setToRemove();

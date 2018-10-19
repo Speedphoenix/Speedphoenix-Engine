@@ -48,10 +48,15 @@ TransformBase::~TransformBase()
 	//dtor
 }
 
+bool TransformBase::hasSamePos(double _x, double _y)
+{
+	return ((ABS(this->centerAbsX() - _x) < negligibleDistance) &&
+			(ABS(this->centerAbsY() - _y) < negligibleDistance));
+}
+
 bool TransformBase::hasSamePos(const TransformBase& other)
 {
-	return ((ABS(this->centerAbsX() - other.centerAbsX()) < negligibleDistance) &&
-			(ABS(this->centerAbsY() - other.centerAbsY()) < negligibleDistance) );
+	return hasSamePos(other.centerAbsX(), other.centerAbsY());
 }
 
 
@@ -379,4 +384,12 @@ void TransformBase::setSpeed(double val)
 	}
 }
 
+void TransformBase::swapPos(TransformBase& first, TransformBase& second)
+{
+	double prevx, prevy;
 
+	prevx = first.centerAbsX();
+	prevy = first.centerAbsY();
+	first.setCenterAbsPos(second.centerAbsX(), second.centerAbsY());
+	second.setCenterAbsPos(prevx, prevy);
+}
