@@ -119,9 +119,9 @@ void ColliderContainer::preUpdate()
 //				  continue; //skip this collision test
 
 			//if the boxes collide on the y axis too
-			if ((currCollider->boxAbsY() > checkCollider->boxAbsY() && currCollider->boxAbsY() < checkCollider->boxEndAbsY())		||
-				(currCollider->boxEndAbsY() > checkCollider->boxAbsY() && currCollider->boxEndAbsY() < checkCollider->boxEndAbsY()) ||
-				(checkCollider->boxAbsY() > currCollider->boxAbsY() && checkCollider->boxAbsY() < currCollider->boxEndAbsY()))
+			if ((currCollider->boxAbsY() > checkCollider->boxAbsY() && currCollider->boxAbsY() < checkCollider->boxEndAbsY())
+				|| (currCollider->boxEndAbsY() > checkCollider->boxAbsY() && currCollider->boxEndAbsY() < checkCollider->boxEndAbsY())
+				|| (checkCollider->boxAbsY() > currCollider->boxAbsY() && checkCollider->boxAbsY() < currCollider->boxEndAbsY()))
 			{
 				currCollider->checkAndAddCollision(checkCollider);
 			}

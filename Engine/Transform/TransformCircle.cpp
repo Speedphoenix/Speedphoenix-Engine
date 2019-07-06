@@ -33,23 +33,8 @@ TransformCircle::~TransformCircle()
 {
 
 }
+
 Transform TransformCircle::getBox()
 {
 	return Transform(m_x, m_y, 2*m_radius, 2*m_radius);
 }
-
-void TransformCircle::blockBorder()
-{
-	GameContainer& container = *GameContainer::instance();
-
-	if (absX() < 0)
-		setAbsX(0);
-	else if ((absX() + 2*m_radius) > container.maximumX())
-		setAbsX(container.maximumX() - 2*m_radius);
-
-	if (absY() < 0)
-		setAbsY(0);
-	else if ((absY() + 2*m_radius) > container.maximumY())
-		setAbsY(container.maximumY() - 2*m_radius);
-}
-

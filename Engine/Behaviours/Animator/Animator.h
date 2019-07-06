@@ -46,6 +46,8 @@ class Animator : public Behaviour, Drawable
 		//the asked direction (because the actual shown dir can be different based on availability
 		double m_askedDir;
 
+		bool m_ready = false;
+
 	//methods
 	protected:
 		virtual void setNewLapse();
@@ -61,10 +63,15 @@ class Animator : public Behaviour, Drawable
 		/// draws at destx, desty on the current target bitmap
 		virtual void draw();
 
-		/// starts the animation
-		virtual void launch();	 //can be used to un-pause too
-		///stops the animation
-		virtual void stop();	//can be used to pause too
+		/// The start function inherited from Behaviour.
+		/// Will be called once only by the gameContainer 
+		virtual void start();
+		
+		/// starts the animation (and makes it visible)
+		/// not to be mistaken with start that is only called once
+		virtual void launch();
+		/// stops the animation (and makes it dissapear completely!!)
+		virtual void stop();
 		///will update stuff like the frame counter if need be
 		virtual void update();
 		///will make sure that the animation looks in the right direction here
@@ -88,6 +95,8 @@ class Animator : public Behaviour, Drawable
 		unsigned currFrame() const { return m_currFrame; }
 		void setCurrFrame(unsigned val);
 		State currAnimation() const { return m_currState.to; }
+		
+		virtual bool isReady() const { return (m_ready); }
 };
 
 #endif // ANIMATOR_H

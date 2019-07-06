@@ -14,11 +14,6 @@ class TransformCircle : public TransformBase
 	protected:
 		double m_radius;
 
-	//funcs
-	protected:
-		//stops from going out-of bounds
-		virtual void blockBorder();
-
 	public:
 		TransformCircle(double _x = 0, double _y = 0, double _radius = 0, bool _moving = false, double _speed = 0, double _orientation = 0);
 		TransformCircle(double _x, double _y, double _radius, double _dx, double _dy, bool _moving = false);

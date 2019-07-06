@@ -3,6 +3,7 @@
 
 #include "Transform.h"
 
+#include <string>
 #include <list>
 
 class Behaviour;
@@ -10,7 +11,6 @@ class Behaviour;
 class GameObject
 {
 	private:
-		std::list<GameObject *>::iterator m_containerIterator;
 		std::list<Behaviour *> m_behaviours;
 
 		//is set indicatively only. The removal from the GameContainer goes differently
@@ -25,6 +25,8 @@ class GameObject
 
 		//if this is true, then killing the parent GameObject will also kill this one
 		bool m_dependsOnParent;
+
+		std::string m_id = "";
 
 	public:
 		GameObject(const Transform& source);
@@ -44,7 +46,7 @@ class GameObject
 		virtual void setParent(GameObject *val);
 		virtual void removeParent();
 
-		bool dependsOnParent() { return m_dependsOnParent; }
+		bool dependsOnParent() const { return m_dependsOnParent; }
 		void setDependsOnParent(bool val) { m_dependsOnParent = val; }
 
 		virtual void addChild(GameObject *child);
@@ -58,6 +60,9 @@ class GameObject
 
 		void attachBehaviour(Behaviour *what);
 		bool detachBehaviour(Behaviour *what);
+
+		const std::string& id() const { return (m_id); }
+		void setId(const std::string& val) { m_id = val; }
 };
 
 #endif // GAMEOBJECT_H

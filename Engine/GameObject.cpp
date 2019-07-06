@@ -22,7 +22,7 @@ GameObject::GameObject(const Transform& source)
 	if (!instance)
 		throw "No instance of GameContainer";
 
-	m_containerIterator = instance->addObject(this);
+	instance->addObject(this);
 }
 
 
@@ -34,7 +34,7 @@ GameObject::GameObject(double _x, double _y, double _w, double _h, double _speed
 	if (!instance)
 		throw "No instance of GameContainer";
 
-	m_containerIterator = instance->addObject(this);
+	instance->addObject(this);
 }
 
 GameObject::GameObject(GameObject *_parent, bool _dependsOnParent, double _x, double _y, double _w, double _h)
@@ -47,7 +47,7 @@ GameObject::GameObject(GameObject *_parent, bool _dependsOnParent, double _x, do
 	if (!instance)
 		throw "No instance of GameContainer";
 
-	m_containerIterator = instance->addObject(this);
+	instance->addObject(this);
 }
 
 GameObject::~GameObject()
@@ -133,7 +133,7 @@ void GameObject::setToRemove()
 	GameContainer* instance = GameContainer::instance();
 	if (instance)
 	{
-		instance->removeObject(m_containerIterator);
+		instance->removeObject(this);
 	}
 }
 
@@ -152,9 +152,9 @@ bool GameObject::detachBehaviour(Behaviour *what)
 		if (it != m_behaviours.end())
 		{
 			m_behaviours.erase(it);
-			return true;
+			return (true);
 		}
 	}
-	return false;
+	return (false);
 }
 

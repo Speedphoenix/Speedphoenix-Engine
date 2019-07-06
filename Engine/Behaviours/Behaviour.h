@@ -11,9 +11,6 @@ class GameObject;
 class Behaviour
 {
 	private:
-		//the iterator of the list in the GameContainer
-		std::list<Behaviour *>::iterator m_containerIterator;
-
 		//the GameObject to which this behavious is atached
 		GameObject* m_attachedObject;
 

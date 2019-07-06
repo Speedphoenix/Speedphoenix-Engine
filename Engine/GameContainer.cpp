@@ -56,14 +56,40 @@ GameContainer::~GameContainer()
 	m_instance = nullptr;
 }
 
+void GameContainer::initAll()
+{
+	// can't use range-based for here as
+	// the start functions might add in more objects
+	list<GameObject*>::iterator it1;
+	list<Behaviour*>::iterator it2;
+	list<Drawable*>::iterator it3;
+
+	// PUT THIS IN A LOOP TO PROPERLY GET THE OBJECTS CREATED IN THE BEHAVIOUR'S START
+	// MAYBE HAVE TWO LISTS FOR EACH, TO BUFFERIZE IT WELL?
+	for (it1 = m_newObjects.begin();it1 != m_newObjects.end();it1++)
+	{
+		(*it1)->start();
+		m_objects.insert(*it1);
+	}
+	m_newObjects.clear();
+
+	for (it2 = m_newBehaviours.begin();it2 != m_newBehaviours.end();it2++)
+	{
+		(*it2)->start();
+		m_behaviours.insert(*it2);
+	}
+	m_newBehaviours.clear();
+
+	for (it3 = m_newDrawables.begin();it3 != m_newDrawables.end();it3++)
+	{
+		m_drawables.insert(*it3);
+	}
+	m_newDrawables.clear();
+}
 
 void GameContainer::start()
 {
-	for (const auto& it : m_objects)
-		it->start();
-
-	for (auto it : m_behaviours)
-		it->start();
+	initAll();
 }
 
 
@@ -184,7 +210,12 @@ void GameContainer::draw()
 
 	for (auto & elem : m_drawables)
 	{
-		elem->draw();
+		//EINF
+		if (elem->isReady())
+		{
+			EINF
+			elem->draw();
+		}
 	}
 
 	al_flip_display();
@@ -198,6 +229,10 @@ void GameContainer::playerUpdate()
 
 void GameContainer::preUpdate()
 {
+	EINF
+		E(m_newBehaviours.size())
+	initAll();
+		E(m_newBehaviours.size())
 	for (const auto& it : m_objects)
 		it->preUpdate();
 
@@ -227,71 +262,75 @@ void GameContainer::postUpdate()
 	for (const auto& it : m_behaviours)
 	{
 		it->postUpdate();
-
-		//the behaviours that have to be deleted manually
-		if (it->toRemove())
-			toDelete.push_back(it);
 	}
-
-	for (const auto& it : toDelete)
-		delete it;
 }
 
 void GameContainer::autoRemove()
 {
-	//ALWAYS start by removing removing the objects (and delete them)
-	//this will also call the destructors to the other stuff
-	//and thus add them to the other remove lists
-	for (const auto& it : m_remObjects)
-	{
-		delete *it;
-		m_objects.erase(it);
-	}
-	m_remObjects.clear();
+	list<GameObject*>::iterator it1;
+	list<Behaviour*>::iterator it2;
 
-	for (const auto& it : m_remBehaviours)
+	// removing stuff might set more stuff to be removed
+	while (!m_remObjects.empty() || !m_remBehaviours.empty()
+		|| !m_remDrawables.empty() || !m_remManBehaviours.empty())
 	{
-		m_behaviours.erase(it);
-	}
-	m_remBehaviours.clear();
+		//ALWAYS start by removing removing the objects (and delete them)
+		//this will also call the destructors to the other stuff
+		//and thus add them to the other remove lists
+		for (it1 = m_remObjects.begin();it1 != m_remObjects.end();it1++)
+		{
+			delete (*it1);
+			m_objects.erase(m_objects.find(*it1));
+		}
+		m_remObjects.clear();
 
-	for (const auto& it : m_remDrawables)
-	{
-		m_drawables.erase(it);
+		for (it2 = m_remManBehaviours.begin();it2 != m_remManBehaviours.end();it2++)
+		{
+			delete (*it2);
+		}
+		m_remManBehaviours.clear();
+
+		for (const auto& it : m_remBehaviours)
+		{
+			m_behaviours.erase(m_behaviours.find(it));
+		}
+		m_remBehaviours.clear();
+
+		for (const auto& it : m_remDrawables)
+		{
+			m_drawables.erase(m_drawables.find(it));
+		}
+		m_remDrawables.clear();
 	}
-	m_remDrawables.clear();
 }
 
 
 //these will be called by their respective constructors
-std::list<GameObject*>::iterator GameContainer::addObject(GameObject* what)
+void GameContainer::addObject(GameObject* what)
 {
 	if (what)
 	{
-		m_objects.push_front(what);
-		return m_objects.begin();
+		m_newObjects.push_back(what);
 	}
 	else
 		throw "tried adding null as an object pointer";
 }
 
-std::list<Behaviour*>::iterator GameContainer::addBehaviour(Behaviour* what)
+void GameContainer::addBehaviour(Behaviour* what)
 {
 	if (what)
 	{
-		m_behaviours.push_front(what);
-		return m_behaviours.begin();
+		m_newBehaviours.push_back(what);
 	}
 	else
 		throw "tried adding null as a behaviour pointer";
 }
 
-std::list<Drawable*>::iterator GameContainer::addDrawable(Drawable* what)
+void GameContainer::addDrawable(Drawable* what)
 {
 	if (what)
 	{
-		m_drawables.push_front(what);
-		return m_drawables.begin();
+		m_newDrawables.push_back(what);
 	}
 	else
 		throw "tried adding null as a drawable pointer";
@@ -300,22 +339,24 @@ std::list<Drawable*>::iterator GameContainer::addDrawable(Drawable* what)
 
 
 ///sets the iterator to be removed at the end of the turn
-void GameContainer::removeObject(std::list<GameObject*>::iterator what)
+void GameContainer::removeObject(GameObject *what)
 {
 	m_remObjects.push_back(what);
 }
 
 ///sets the iterator to be removed at the end of the turn
-void GameContainer::removeBehaviour(std::list<Behaviour*>::iterator what)
+void GameContainer::removeBehaviour(Behaviour *what)
 {
 	m_remBehaviours.push_back(what);
 }
 
 ///sets the iterator to be removed at the end of the turn
-void GameContainer::removeDrawable(std::list<Drawable*>::iterator what)
+void GameContainer::removeDrawable(Drawable *what)
 {
 	m_remDrawables.push_back(what);
 }
 
-
-
+void GameContainer::manualRemoveBehaviour(Behaviour *what)
+{
+	m_remManBehaviours.push_back(what);
+}

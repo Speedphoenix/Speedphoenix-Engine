@@ -74,8 +74,6 @@ void TransformBase::translate(double factor)
 
 	m_x += m_dx*factor;
 	m_y += m_dy*factor;
-
-	blockBorder();
 }
 
 void TransformBase::headTowards(const TransformBase& where, double speedLimit)
@@ -228,22 +226,6 @@ void TransformBase::setParent(TransformBase *val)
 	setAbsX(_x);
 	setAbsY(_y);
 }
-
-void TransformBase::blockBorder()
-{
-	GameContainer& container = *GameContainer::instance();
-
-	if (absX() < 0)
-		setAbsX(0);
-	else if (absX() > container.maximumX())
-		setAbsX(container.maximumX());
-
-	if (absY() < 0)
-		setAbsY(0);
-	else if (absY() > container.maximumY())
-		setAbsY(container.maximumY());
-}
-
 
 //two rectangles
 bool TransformBase::isInside(const Transform& contained, const Transform& container)

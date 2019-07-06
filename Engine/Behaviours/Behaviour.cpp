@@ -10,7 +10,7 @@ Behaviour::Behaviour(GameObject* attachTo)
 	if (!instance)
 		throw "No instance of GameContainer";
 
-	m_containerIterator = instance->addBehaviour(this);
+	instance->addBehaviour(this);
 }
 
 Behaviour::~Behaviour()
@@ -19,7 +19,7 @@ Behaviour::~Behaviour()
 
 	if (instance)
 	{
-		instance->removeBehaviour(m_containerIterator);
+		instance->removeBehaviour(this);
 	}
 }
 
@@ -29,10 +29,10 @@ void Behaviour::setToRemove()
 	if (m_toRemove)
 		return;
 
-	if (m_attachedObject->detachBehaviour(this))
-	{
-		m_toRemove = true;
-		m_attachedObject = nullptr;
-	}
+	m_attachedObject->detachBehaviour(this);
+	m_toRemove = true;
+	m_attachedObject = nullptr;
+
+	GameContainer::instance()->manualRemoveBehaviour(this);
 }
 

@@ -61,9 +61,6 @@ class TransformBase
 		//computes the speed and orientation based on dx and dy
 		virtual void calcOrientation();
 
-		//stops from going out-of bounds
-		virtual void blockBorder();
-
 	public:
 		TransformBase(double _x = 0, double _y = 0, bool _moving = false, double _speed = 0, double _orientation = 0);
 		TransformBase(double _x, double _y, double _dx, double _dy, bool _moving = false);

@@ -19,6 +19,8 @@
 
 # define EINF ;
 
+# define SEPP ;
+
 # define ES(x) ;
 
 #else
@@ -28,6 +30,8 @@
 # define E(x) { EINF std::cerr << ": " << #x ": " << (x) << std::endl; }
 
 # define EINF { std::cerr << __FILE__ ": " << "l" << __LINE__ << std::endl; }
+
+# define SEPP { std::cerr << "---------------------------------" << std::endl; }
 
 # define ES(x) { std::cerr << std::endl << (x) << std::endl; }
 

@@ -17,11 +17,6 @@ class Transform : public TransformBase
 		double m_w; //!< width
 		double m_h; //!< height
 
-	//methods
-	protected:
-		//stops from going out-of bounds
-		virtual void blockBorder();
-
 	public:
 		Transform(double _x = 0, double _y = 0, double _w = 0, double _h = 0, bool _moving = false, double _speed = 0, double _orientation = 0);
 		Transform(double _x, double _y, double _w, double _h, double _dx, double _dy, bool _moving = false);

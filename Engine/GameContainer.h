@@ -2,6 +2,7 @@
 #define GAMECONTAINER_H
 
 #include <list>
+#include <set>
 
 class Drawable;
 class GameObject;
@@ -28,14 +29,22 @@ class GameContainer
 	//non-static member variables
 	private:
 		//lists of all Objects and instances of most things
-		std::list<GameObject *> m_objects;
-		std::list<Behaviour *> m_behaviours;
-		std::list<Drawable *> m_drawables;
+		std::set<GameObject *> m_objects;
+		std::set<Behaviour *> m_behaviours;
+		std::set<Drawable *> m_drawables;
+
+		//lists of things that still need their start() function to be called
+		std::list<GameObject *> m_newObjects;
+		std::list<Behaviour *> m_newBehaviours;
+		std::list<Drawable *> m_newDrawables;
 
 		//list of things that will be be destroyed at the end of current turn (before draw)
-		std::list<std::list<GameObject*>::iterator> m_remObjects;
-		std::list<std::list<Behaviour*>::iterator> m_remBehaviours;
-		std::list<std::list<Drawable*>::iterator> m_remDrawables;
+		std::list<GameObject *> m_remObjects;
+		std::list<Behaviour *> m_remBehaviours;
+		std::list<Drawable *> m_remDrawables;
+
+		//when manualy asking to remove a behaviour
+		std::list<Behaviour *> m_remManBehaviours;
 
 		ALLEGRO_EVENT_QUEUE *m_eventsDisplay;
 		ALLEGRO_EVENT_QUEUE *m_eventsKeyboard;
@@ -43,6 +52,8 @@ class GameContainer
 		ALLEGRO_EVENT_QUEUE *m_eventsTouch;
 
 		double m_deltaTime;
+		// make a new_list for the drawables, make all the addition of everything
+		// to their respective lists in the initAll(), use iterators in the autoRemove
 
 	protected:
 
@@ -60,6 +71,10 @@ class GameContainer
 
 
 		//call every turn
+
+		//calls the start function for new objects
+		void initAll();
+
 		//the individual updates are called for each object, behaviour...
 		void eventCatch();		//!< takes in all events that happened since the last game loop
 		void preUpdate();		//!< comes first
@@ -88,6 +103,7 @@ class GameContainer
 		///returns if the game should stop (is finished) - might wanna rename this one
 		virtual bool shouldStop() const { return m_finished; }
 
+		virtual void setFinished(bool val) { m_finished = val; }
 
 		//the border of the map...
 		virtual double maximumX() { return 0.0; }
@@ -95,14 +111,16 @@ class GameContainer
 
 
 		//these will be called by their respective constructors
-		std::list<GameObject*>::iterator addObject(GameObject* what);
-		std::list<Behaviour*>::iterator addBehaviour(Behaviour* what);
-		std::list<Drawable*>::iterator addDrawable(Drawable* what);
+		void addObject(GameObject* what);
+		void addBehaviour(Behaviour* what);
+		void addDrawable(Drawable* what);
 
-		//these will set the iterator to be removed at the end of the turn
-		void removeObject(std::list<GameObject*>::iterator what);
-		void removeBehaviour(std::list<Behaviour*>::iterator what);
-		void removeDrawable(std::list<Drawable*>::iterator what);
+		//these will set the instance to be removed at the end of the turn
+		void removeObject(GameObject *what);
+		void removeBehaviour(Behaviour *what);
+		void removeDrawable(Drawable *what);
+
+		void manualRemoveBehaviour(Behaviour *what);
 };
 
 

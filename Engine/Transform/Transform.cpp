@@ -34,21 +34,3 @@ Transform::~Transform()
 {
 	//dtor
 }
-
-
-
-void Transform::blockBorder()
-{
-	GameContainer& container = *GameContainer::instance();
-
-	if (absX() < 0)
-		setAbsX(0);
-	else if (endAbsX() > container.maximumX())
-		setAbsX(container.maximumX() - m_w);
-
-	if (absY() < 0)
-		setAbsY(0);
-	else if (endAbsY() > container.maximumY())
-		setAbsY(container.maximumY() - m_h);
-}
-

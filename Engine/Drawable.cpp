@@ -1,21 +1,18 @@
 #include "Drawable.h"
 
 #include "GameContainer.h"
-#include "TransformBase.h"
-#include "Transform.h"
-#include "Animator.h"
-#include "Camera.h"
 
 #include "debugNerrors.h"
 
 Drawable::Drawable()
+	:m_ready(false)
 {
 	GameContainer* instance = GameContainer::instance();
 
 	if (!instance)
 		throw "No instance of GameContainer";
 
-	m_containerIterator = instance->addDrawable(this);
+	instance->addDrawable(this);
 }
 
 Drawable::~Drawable()
@@ -24,7 +21,7 @@ Drawable::~Drawable()
 
 	if (instance)
 	{
-		instance->removeDrawable(m_containerIterator);
+		instance->removeDrawable(this);
 	}
 }
 
