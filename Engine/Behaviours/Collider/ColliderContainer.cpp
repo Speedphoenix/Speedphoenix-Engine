@@ -1,5 +1,4 @@
 #include "ColliderContainer.h"
-ColliderContainer* ColliderContainer::m_instance = nullptr;
 
 #include "GameContainer.h"
 #include "GameObject.h"
@@ -11,6 +10,8 @@ ColliderContainer* ColliderContainer::m_instance = nullptr;
 #include <algorithm>
 
 using namespace std;
+
+ColliderContainer* ColliderContainer::m_instance = nullptr;
 
 //this acts as first < second
 bool XComparator::operator() (Collider* first, Collider* second)

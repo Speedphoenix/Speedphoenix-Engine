@@ -83,6 +83,8 @@ class GameContainer
 		void postUpdate();		//!< comes last
 		void autoRemove();		//!< remove anything that needs to be removed during this game loop
 
+		virtual void init() { }
+
 	public:
 		GameContainer();
 		virtual ~GameContainer();
@@ -92,7 +94,7 @@ class GameContainer
 		GameContainer& operator=(const GameContainer&) = delete;
 
 		///called at the start of the game
-		virtual void start();
+		void start();
 
 		///called at every game loop, calls every other update function and draw()
 		virtual void update(double factor);

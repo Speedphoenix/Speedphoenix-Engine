@@ -28,7 +28,7 @@ DEFAULTFLAGS	=	-std=c++11 -fexceptions $(WARNINGS)
 
 # the file Makefile.eng contains:
 # ENGINEDIRS variable
-# ENGINEDEPEND variable
+# ENGINEDEPEND variable
 include Makefile.eng
 
 SRDIRS			+=	$(ENGINEDIRS)

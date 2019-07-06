@@ -1,5 +1,4 @@
 #include "GameContainer.h"
-GameContainer * GameContainer::m_instance = nullptr;
 
 #include "GameObject.h"
 #include "Behaviour.h"
@@ -14,6 +13,8 @@ GameContainer * GameContainer::m_instance = nullptr;
 
 
 using namespace std;
+
+GameContainer * GameContainer::m_instance = nullptr;
 
 
 GameContainer::GameContainer()
@@ -89,7 +90,11 @@ void GameContainer::initAll()
 
 void GameContainer::start()
 {
+	EINF
+	this->init();
+	EINF
 	initAll();
+	EINF
 }
 
 
@@ -229,10 +234,10 @@ void GameContainer::playerUpdate()
 
 void GameContainer::preUpdate()
 {
-	EINF
-		E(m_newBehaviours.size())
+//	EINF
+		//E(m_newBehaviours.size())
 	initAll();
-		E(m_newBehaviours.size())
+		//E(m_newBehaviours.size())
 	for (const auto& it : m_objects)
 		it->preUpdate();
 
