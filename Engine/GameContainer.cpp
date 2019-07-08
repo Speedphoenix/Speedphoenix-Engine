@@ -90,11 +90,8 @@ void GameContainer::initAll()
 
 void GameContainer::start()
 {
-	EINF
 	this->init();
-	EINF
 	initAll();
-	EINF
 }
 
 
@@ -215,10 +212,8 @@ void GameContainer::draw()
 
 	for (auto & elem : m_drawables)
 	{
-		//EINF
 		if (elem->isReady())
 		{
-			EINF
 			elem->draw();
 		}
 	}
@@ -234,10 +229,8 @@ void GameContainer::playerUpdate()
 
 void GameContainer::preUpdate()
 {
-//	EINF
-		//E(m_newBehaviours.size())
 	initAll();
-		//E(m_newBehaviours.size())
+
 	for (const auto& it : m_objects)
 		it->preUpdate();
 
@@ -279,9 +272,9 @@ void GameContainer::autoRemove()
 	while (!m_remObjects.empty() || !m_remBehaviours.empty()
 		|| !m_remDrawables.empty() || !m_remManBehaviours.empty())
 	{
-		//ALWAYS start by removing removing the objects (and delete them)
-		//this will also call the destructors to the other stuff
-		//and thus add them to the other remove lists
+		// ALWAYS start by removing the objects (and delete them)
+		// this will also call the destructors to the other stuff
+		// and thus add them to the other remove lists
 		for (it1 = m_remObjects.begin();it1 != m_remObjects.end();it1++)
 		{
 			delete (*it1);

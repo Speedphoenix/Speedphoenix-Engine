@@ -2,6 +2,8 @@
 #include "GameContainer.h"
 #include "GameObject.h"
 
+#include "debugNerrors.h"
+
 Behaviour::Behaviour(GameObject* attachTo)
 	:m_attachedObject(attachTo), m_toRemove(false)
 {

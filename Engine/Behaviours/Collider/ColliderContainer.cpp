@@ -70,7 +70,8 @@ ColliderContainer::ColliderContainer()
 ColliderContainer::~ColliderContainer()
 {
 	//dtor
-
+	if (m_instance == this)
+		m_instance = nullptr;
 }
 
 void ColliderContainer::sortList()

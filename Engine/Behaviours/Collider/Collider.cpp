@@ -27,7 +27,12 @@ Collider::Collider(GameObject* attachTo, const Transform& _box, bool keepRelativ
 
 Collider::~Collider()
 {
-	ColliderContainer::instance()->removeCollider(this);
+	ColliderContainer *instance = ColliderContainer::instance();
+
+	if (instance)
+	{
+		ColliderContainer::instance()->removeCollider(this);
+	}
 }
 
 Collider::Collider(const Collider& other, GameObject* attachTo)

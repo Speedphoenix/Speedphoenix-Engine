@@ -52,10 +52,10 @@ GameObject::GameObject(GameObject *_parent, bool _dependsOnParent, double _x, do
 
 GameObject::~GameObject()
 {
-	//gameObjects aren't set to be removed from the gameContainer in their destructor but in the setToRemove() func
+	// gameObjects aren't set to be removed from the gameContainer in their destructor but in the setToRemove() func
 
-	//the GameObjects are removed first and destroyed.
-	//This calls the destructor for all things instide, who will tell the GameContainer to remove them
+	// the GameObjects are removed first and destroyed.
+	// This calls the destructor for all things instide, who will tell the GameContainer to remove them
 	for (auto& elem : m_behaviours)
 	{
 		delete elem;

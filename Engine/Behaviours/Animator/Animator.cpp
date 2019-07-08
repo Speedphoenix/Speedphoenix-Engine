@@ -158,8 +158,6 @@ void Animator::draw()
 	const TransformBase& where = this->attachedObject()->transform();
 	const Transform& camera = Camera::getCurrentView();
 
-	EINF
-
 	if (where.touches(camera))
 	{
 		double relx = 0, rely = 0;
@@ -175,7 +173,6 @@ void Animator::start()
 
 void Animator::launch()
 {
-	EINF
 	setNewLapse();
 	al_start_timer(m_timer);
 	m_ready = true;
