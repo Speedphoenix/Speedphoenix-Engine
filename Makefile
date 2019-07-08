@@ -20,9 +20,10 @@ WARNINGS		=	-Wall -Wshadow -Wswitch-enum -Wundef	\
 					-Wnon-virtual-dtor -Wpedantic	 		\
 					-Wmissing-include-dirs -Winvalid-pch
 
-EXTRAWFLAGS		=	-Wextra -Wfloat-equal -Weffc++			\
-					-Wunreachable-code -Wswitch-default		\
-					-Wmissing-declarations
+EXTRAWFLAGS		=	-Wextra -Wfloat-equal -Wswitch-default	\
+					-Wunreachable-code						\
+					-Wmissing-declarations					\
+#					-Weffc++
 
 DEFAULTFLAGS	=	-std=c++11 -fexceptions $(WARNINGS)
 

@@ -3,10 +3,47 @@
 
 union ALLEGRO_EVENT;
 
-struct KeyboardEvent {
+struct Event;
+struct KeyboardEvent;
+struct MouseEvent;
+struct TouchEvent;
+
+typedef void (*EventCallback)(const Event&);
+typedef void (*KeyboardEventCallback)(const KeyboardEvent&);
+typedef void (*MouseEventCallback)(const MouseEvent&);
+typedef void (*TouchEventCallback)(const TouchEvent&);
+
+inline void EventNoop(const Event& event)
+{
+	(void)event;
+}
+
+inline void KeyboardEventNoop(const KeyboardEvent& event)
+{
+	(void)event;
+}
+
+inline void MouseEventNoop(const MouseEvent& event)
+{
+	(void)event;
+}
+
+inline void TouchEventNoop(const TouchEvent& event)
+{
+	(void)event;
+}
+
+struct Event
+{
 	unsigned int type;
-	struct ALLEGRO_KEYBOARD *source;
 	double timestamp;
+
+	Event(const ALLEGRO_EVENT& what);
+};
+
+struct KeyboardEvent : public Event
+{
+	struct ALLEGRO_KEYBOARD *source;
 
 	struct ALLEGRO_DISPLAY *display;
 	int keycode;
@@ -17,10 +54,9 @@ struct KeyboardEvent {
 	KeyboardEvent(const ALLEGRO_EVENT& what);
 };
 
-struct MouseEvent {
-	unsigned int type;
+struct MouseEvent : public Event
+{
 	struct ALLEGRO_MOUSE *source;
-	double timestamp;
 
 	/* (display) Window the event originate from
 	 * (x, y) Primary mouse position
@@ -38,10 +74,9 @@ struct MouseEvent {
 	MouseEvent(const ALLEGRO_EVENT& what);
 };
 
-struct TouchEvent {
-	unsigned int type;
+struct TouchEvent : public Event
+{
 	struct ALLEGRO_TOUCH_INPUT *source;
-	double timestamp;
 
 	struct ALLEGRO_DISPLAY *display;
 	/* (id) Identifier of the event, always positive number.
