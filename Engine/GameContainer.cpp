@@ -302,6 +302,45 @@ void GameContainer::autoRemove()
 	}
 }
 
+#define FNADDCALLBACK(type)														\
+const Behaviour##type##Callback *add##type##Callback(Behaviour *catcher,		\
+		type##EventCallback toCall)												\
+{																				\
+	Behaviour##type##Callback *rep;												\
+																				\
+	if (catcher && toCall)														\
+		rep = new Behaviour##type##Callback(catcher, toCall);					\
+	else																		\
+		throw "tried adding null callback";										\
+	m_callbacks##type##.insert(rep);											\
+	return rep;																	\
+}
+
+m_objects.insert(*it1);
+
+FNADDCALLBACK(Keyboard)
+FNADDCALLBACK(Mouse)
+FNADDCALLBACK(Touch)
+
+#undef FNADDCALLBACK
+
+#define FNREMOVECALLBACK(type)													\
+void remove##type##Callback(const Behaviour##type##Callback *what)				\
+{																				\
+	if (what)																	\
+	{																			\
+		auto a = m_callbacks##type##.find(what);								\
+		if (a != m_callbacks##type##.end())										\
+			m_callbacks##type##.erase(a);										\
+	}																			\
+}
+
+FNREMOVECALLBACK(Keyboard)
+FNREMOVECALLBACK(Mouse)
+FNREMOVECALLBACK(Touch)
+
+#undef FNREMOVECALLBACK
+
 
 //these will be called by their respective constructors
 void GameContainer::addObject(GameObject* what)

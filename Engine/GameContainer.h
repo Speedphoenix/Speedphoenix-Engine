@@ -1,49 +1,53 @@
 #ifndef GAMECONTAINER_H
-#define GAMECONTAINER_H
+# define GAMECONTAINER_H
 
-#include <list>
-#include <set>
+# include <list>
+# include <set>
+
+# include "Events.h"
 
 class Drawable;
 class GameObject;
 class Behaviour;
 struct ALLEGRO_EVENT_QUEUE;
 
-struct KeyboardEvent;
-struct MouseEvent;
-struct TouchEvent;
-
 class GameContainer
 {
 	//statics
 	protected:
-		static GameContainer * m_instance;
+		static GameContainer *m_instance;
 	public:
-		static GameContainer * instance() { return m_instance; }
+		static GameContainer *instance() { return m_instance; }
 
-		static GameObject * getGlobalObject() { return m_instance->m_globalObject; }
+		static GameObject *getGlobalObject() { return m_instance->m_globalObject; }
 
 		///the time elapsed since the last game loop. Use this as a factor to move...
 		static double deltaTime() { return m_instance->m_deltaTime; }
 
 	//non-static member variables
 	private:
-		//lists of all Objects and instances of most things
+		// lists of all things to call when events arise
+		// std::set<BehaviourDisplayqCallback *> m_callbacksDisp;
+		std::set<BehaviourKeyboardCallback *> m_callbacksKeyboard;
+		std::set<BehaviourMouseCallback *> m_callbacksMouse;
+		std::set<BehaviourTouchCallback *> m_callbacksTouch;
+
+		// lists of all Objects and instances of most things
 		std::set<GameObject *> m_objects;
 		std::set<Behaviour *> m_behaviours;
 		std::set<Drawable *> m_drawables;
 
-		//lists of things that still need their start() function to be called
+		// lists of things that still need their start() function to be called
 		std::list<GameObject *> m_newObjects;
 		std::list<Behaviour *> m_newBehaviours;
 		std::list<Drawable *> m_newDrawables;
 
-		//list of things that will be be destroyed at the end of current turn (before draw)
+		// list of things that will be be destroyed at the end of current turn (before draw)
 		std::list<GameObject *> m_remObjects;
 		std::list<Behaviour *> m_remBehaviours;
 		std::list<Drawable *> m_remDrawables;
 
-		//when manualy asking to remove a behaviour
+		// when manualy asking to remove a behaviour
 		std::list<Behaviour *> m_remManBehaviours;
 
 		ALLEGRO_EVENT_QUEUE *m_eventsDisplay;
@@ -52,6 +56,8 @@ class GameContainer
 		ALLEGRO_EVENT_QUEUE *m_eventsTouch;
 
 		double m_deltaTime;
+
+		// TODO:
 		// make a new_list for the drawables, make all the addition of everything
 		// to their respective lists in the initAll(), use iterators in the autoRemove
 
@@ -65,8 +71,11 @@ class GameContainer
 	//non-static methods
 	protected:
 
+		[[deprecated]]
 		virtual void onKeyboardEvent(const KeyboardEvent& event) { }
+		[[deprecated]]
 		virtual void onMouseEvent(const MouseEvent& event) { }
+		[[deprecated]]
 		virtual void onTouchEvent(const TouchEvent& event) { }
 
 
@@ -110,6 +119,24 @@ class GameContainer
 		//the border of the map...
 		virtual double maximumX() { return 0.0; }
 		virtual double maximumY() { return 0.0; }
+
+		
+		// used to subscribe to certain events make sure you keep the returned
+		// value to unsubscribe later
+		virtual const BehaviourKeyboardCallback *addKeyboardCallback(
+					Behaviour *catcher, KeyboardEventCallback toCall) final;
+		virtual const BehaviourMouseCallback *addMouseCallback(
+					Behaviour *catcher, MouseEventCallback toCall) final;
+		virtual const BehaviourTouchCallback *addTouchCallback(
+					Behaviour *catcher, TouchEventCallback toCall) final;
+
+		// used to unsubscribe to events
+		virtual void removeKeyboardCallback(
+					const BehaviourKeyboardCallback *what) final;
+		virtual void removeMouseCallback(
+					const BehaviourMouseCallback *what) final;
+		virtual void removeTouchCallback(
+					const BehaviourTouch *what) final;
 
 
 		//these will be called by their respective constructors
