@@ -25,7 +25,8 @@ EXTRAWFLAGS		=	-Wextra -Wfloat-equal -Wswitch-default	\
 					-Wmissing-declarations					\
 #					-Weffc++
 
-DEFAULTFLAGS	=	-std=c++11 -fexceptions $(WARNINGS)
+# use c++14 for the deprecated tag (though not used yet?)
+DEFAULTFLAGS	=	-std=c++14 -fexceptions $(WARNINGS)
 
 # the file Makefile.eng contains:
 # ENGINEDIRS variable

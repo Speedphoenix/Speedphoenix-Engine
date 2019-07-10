@@ -3,7 +3,73 @@
 //allegro 5's events. contains ALLEGRO_EVENT etc
 #include "allegro5/events.h"
 
+// BehaviourCallback
+BehaviourCallback::BehaviourCallback(Behaviour *_catcher)
+	:m_catcher(_catcher)
+{
 
+}
+
+BehaviourCallback::~BehaviourCallback()
+{
+
+}
+
+// BehaviourKeyboardCallback
+BehaviourKeyboardCallback::BehaviourKeyboardCallback(Behaviour *_catcher,
+		KeyboardEventCallback fn)
+	:BehaviourCallback(_catcher), m_func(fn)
+{
+
+}
+
+BehaviourKeyboardCallback::~BehaviourKeyboardCallback()
+{
+
+}
+
+void BehaviourKeyboardCallback::call(const KeyboardEvent& event)
+{
+	(m_catcher->*m_func)(event);
+}
+
+// BehaviourMouseCallback
+BehaviourMouseCallback::BehaviourMouseCallback(Behaviour *_catcher,
+		MouseEventCallback fn)
+	:BehaviourCallback(_catcher), m_func(fn)
+{
+
+}
+
+BehaviourMouseCallback::~BehaviourMouseCallback()
+{
+
+}
+
+void BehaviourMouseCallback::call(const MouseEvent& event)
+{
+	(m_catcher->*m_func)(event);
+}
+
+// BehaviourTouchCallback
+BehaviourTouchCallback::BehaviourTouchCallback(Behaviour *_catcher,
+		TouchEventCallback fn)
+	:BehaviourCallback(_catcher), m_func(fn)
+{
+
+}
+
+BehaviourTouchCallback::~BehaviourTouchCallback()
+{
+
+}
+
+void BehaviourTouchCallback::call(const TouchEvent& event)
+{
+	(m_catcher->*m_func)(event);
+}
+
+// The base event structs (without any function calls)
 Event::Event(const ALLEGRO_EVENT& what)
 	:type(what.type), timestamp(what.any.timestamp)
 {

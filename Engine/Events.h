@@ -1,5 +1,5 @@
 #ifndef EVENTS_H_INCLUDED //does not conflict with allegro's events.h
-#define EVENTS_H_INCLUDED
+# define EVENTS_H_INCLUDED
 
 union ALLEGRO_EVENT;
 
@@ -7,11 +7,62 @@ struct Event;
 struct KeyboardEvent;
 struct MouseEvent;
 struct TouchEvent;
+class Behaviour;
 
-typedef void (*EventCallback)(const Event&);
-typedef void (*KeyboardEventCallback)(const KeyboardEvent&);
-typedef void (*MouseEventCallback)(const MouseEvent&);
-typedef void (*TouchEventCallback)(const TouchEvent&);
+// TODO: make display events
+
+// the different types of callbacks
+typedef void (Behaviour::*EventCallback)(const Event&);
+typedef void (Behaviour::*KeyboardEventCallback)(const KeyboardEvent&);
+typedef void (Behaviour::*MouseEventCallback)(const MouseEvent&);
+typedef void (Behaviour::*TouchEventCallback)(const TouchEvent&);
+
+// The classes that will call the event listeners along with the right object
+class BehaviourCallback
+{
+	protected:
+		Behaviour *m_catcher;
+
+	public:
+		BehaviourCallback(Behaviour *_catcher);
+		virtual ~BehaviourCallback();
+};
+
+class BehaviourKeyboardCallback : public BehaviourCallback
+{
+	protected:
+		KeyboardEventCallback m_func;
+
+	public:
+		BehaviourKeyboardCallback(Behaviour *_catcher, KeyboardEventCallback fn);
+		virtual ~BehaviourKeyboardCallback();
+
+		virtual void call(const KeyboardEvent& event);
+};
+
+class BehaviourMouseCallback : public BehaviourCallback
+{
+	protected:
+		MouseEventCallback m_func;
+
+	public:
+		BehaviourMouseCallback(Behaviour *_catcher, MouseEventCallback fn);
+		virtual ~BehaviourMouseCallback();
+
+		virtual void call(const MouseEvent& event);
+};
+
+class BehaviourTouchCallback : public BehaviourCallback
+{
+	protected:
+		TouchEventCallback m_func;
+
+	public:
+		BehaviourTouchCallback(Behaviour *_catcher, TouchEventCallback fn);
+		virtual ~BehaviourTouchCallback();
+
+		virtual void call(const TouchEvent& event);
+};
 
 inline void EventNoop(const Event& event)
 {
