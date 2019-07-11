@@ -331,7 +331,10 @@ void remove##type##Callback(const Behaviour##type##Callback *what)				\
 	{																			\
 		auto a = m_callbacks##type##.find(what);								\
 		if (a != m_callbacks##type##.end())										\
+		{																		\
+			delete *a;															\
 			m_callbacks##type##.erase(a);										\
+		}																		\
 	}																			\
 }
 
