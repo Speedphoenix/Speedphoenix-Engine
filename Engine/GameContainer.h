@@ -13,6 +13,9 @@ struct ALLEGRO_EVENT_QUEUE;
 
 class GameContainer
 {
+	// Behaviour will use the add/remove callback methods
+	friend class Behaviour;
+	
 	//statics
 	protected:
 		static GameContainer *m_instance;
@@ -69,6 +72,21 @@ class GameContainer
 
 
 	//non-static methods
+	private:
+		// used to subscribe to certain events make sure you keep the returned
+		// value to unsubscribe later
+		virtual const BehaviourKeyboardCallback *addKeyboardCallback(
+					Behaviour *catcher, KeyboardEventCallback toCall) final;
+		virtual const BehaviourMouseCallback *addMouseCallback(
+					Behaviour *catcher, MouseEventCallback toCall) final;
+		virtual const BehaviourTouchCallback *addTouchCallback(
+					Behaviour *catcher, TouchEventCallback toCall) final;
+
+		// used to unsubscribe to events
+		virtual void removeKeyboardCallback(BehaviourKeyboardCallback *what) final;
+		virtual void removeMouseCallback(BehaviourMouseCallback *what) final;
+		virtual void removeTouchCallback(BehaviourTouchCallback *what) final;
+
 	protected:
 
 		[[deprecated]]
@@ -121,23 +139,6 @@ class GameContainer
 		virtual double maximumY() { return 0.0; }
 
 		
-		// used to subscribe to certain events make sure you keep the returned
-		// value to unsubscribe later
-		virtual const BehaviourKeyboardCallback *addKeyboardCallback(
-					Behaviour *catcher, KeyboardEventCallback toCall) final;
-		virtual const BehaviourMouseCallback *addMouseCallback(
-					Behaviour *catcher, MouseEventCallback toCall) final;
-		virtual const BehaviourTouchCallback *addTouchCallback(
-					Behaviour *catcher, TouchEventCallback toCall) final;
-
-		// used to unsubscribe to events
-		virtual void removeKeyboardCallback(
-					const BehaviourKeyboardCallback *what) final;
-		virtual void removeMouseCallback(
-					const BehaviourMouseCallback *what) final;
-		virtual void removeTouchCallback(
-					const BehaviourTouch *what) final;
-
 
 		//these will be called by their respective constructors
 		void addObject(GameObject* what);

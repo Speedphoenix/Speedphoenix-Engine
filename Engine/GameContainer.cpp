@@ -28,6 +28,7 @@ GameContainer::GameContainer()
 	//putting this outside the initialization list because it needs the instance
 	m_globalObject = new GameObject();
 
+	// TODO: put all of these things that depend on allegro in a separate file
 	m_eventsDisplay = al_create_event_queue();
 	al_register_event_source(m_eventsDisplay, al_get_display_event_source(currentDisplay));
 
@@ -95,14 +96,15 @@ void GameContainer::start()
 }
 
 
-///MAKE A STRUCT/CLASS FOR ACTIONS (DIFFERENT EVENTS CAN TRIGGER THE SAME ACTION), AND USE THAT.
-///to make it easier to eventually have multiple players (online? AI? split screen?)
-//for events:
-//https://allegro.developpez.com/5/livre/?page=page_6
+/// MAKE A STRUCT/CLASS FOR ACTIONS (DIFFERENT EVENTS CAN TRIGGER THE SAME ACTION), AND USE THAT.
+/// to make it easier to eventually have multiple players (online? AI? split screen?)
+// for events:
+// https://allegro.developpez.com/5/livre/?page=page_6
 void GameContainer::eventCatch()
 {
 	ALLEGRO_EVENT event = {0};
 
+	// TODO: put all of these things that depend on allegro in a separate file
 	//not directly using al_get_next event in case we need to just peek?
 	while (!al_is_event_queue_empty(m_eventsDisplay))
 	{
@@ -303,8 +305,8 @@ void GameContainer::autoRemove()
 }
 
 #define FNADDCALLBACK(type)														\
-const Behaviour##type##Callback *add##type##Callback(Behaviour *catcher,		\
-		type##EventCallback toCall)												\
+const Behaviour##type##Callback *GameContainer::add##type##Callback(			\
+			Behaviour *catcher, type##EventCallback toCall)						\
 {																				\
 	Behaviour##type##Callback *rep;												\
 																				\
@@ -312,11 +314,10 @@ const Behaviour##type##Callback *add##type##Callback(Behaviour *catcher,		\
 		rep = new Behaviour##type##Callback(catcher, toCall);					\
 	else																		\
 		throw "tried adding null callback";										\
-	m_callbacks##type##.insert(rep);											\
+	m_callbacks##type.insert(rep);												\
 	return rep;																	\
 }
 
-m_objects.insert(*it1);
 
 FNADDCALLBACK(Keyboard)
 FNADDCALLBACK(Mouse)
@@ -325,15 +326,15 @@ FNADDCALLBACK(Touch)
 #undef FNADDCALLBACK
 
 #define FNREMOVECALLBACK(type)													\
-void remove##type##Callback(const Behaviour##type##Callback *what)				\
+void GameContainer::remove##type##Callback(Behaviour##type##Callback *what)		\
 {																				\
 	if (what)																	\
 	{																			\
-		auto a = m_callbacks##type##.find(what);								\
-		if (a != m_callbacks##type##.end())										\
+		auto a = m_callbacks##type.find(what);									\
+		if (a != m_callbacks##type.end())										\
 		{																		\
 			delete *a;															\
-			m_callbacks##type##.erase(a);										\
+			m_callbacks##type.erase(a);											\
 		}																		\
 	}																			\
 }
@@ -400,3 +401,5 @@ void GameContainer::manualRemoveBehaviour(Behaviour *what)
 {
 	m_remManBehaviours.push_back(what);
 }
+
+//call the callbacks

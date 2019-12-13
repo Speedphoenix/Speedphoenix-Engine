@@ -3,14 +3,20 @@
 //allegro 5's events. contains ALLEGRO_EVENT etc
 #include "allegro5/events.h"
 
-// BehaviourCallback
-BehaviourCallback::BehaviourCallback(Behaviour *_catcher)
+BehaviourCallbackList::~BehaviourCallbackList()
+{
+	for (auto& elem : m_callbacks)
+		delete elem;
+}
+
+// BehaviourCallback1
+BehaviourCallback1::BehaviourCallback1(Behaviour *_catcher)
 	:m_catcher(_catcher)
 {
 
 }
 
-BehaviourCallback::~BehaviourCallback()
+BehaviourCallback1::~BehaviourCallback1()
 {
 
 }
@@ -18,7 +24,7 @@ BehaviourCallback::~BehaviourCallback()
 // BehaviourKeyboardCallback
 BehaviourKeyboardCallback::BehaviourKeyboardCallback(Behaviour *_catcher,
 		KeyboardEventCallback fn)
-	:BehaviourCallback(_catcher), m_func(fn)
+	:BehaviourCallback1(_catcher), m_func(fn)
 {
 
 }
@@ -36,7 +42,7 @@ void BehaviourKeyboardCallback::call(const KeyboardEvent& event)
 // BehaviourMouseCallback
 BehaviourMouseCallback::BehaviourMouseCallback(Behaviour *_catcher,
 		MouseEventCallback fn)
-	:BehaviourCallback(_catcher), m_func(fn)
+	:BehaviourCallback1(_catcher), m_func(fn)
 {
 
 }
@@ -54,7 +60,7 @@ void BehaviourMouseCallback::call(const MouseEvent& event)
 // BehaviourTouchCallback
 BehaviourTouchCallback::BehaviourTouchCallback(Behaviour *_catcher,
 		TouchEventCallback fn)
-	:BehaviourCallback(_catcher), m_func(fn)
+	:BehaviourCallback1(_catcher), m_func(fn)
 {
 
 }
